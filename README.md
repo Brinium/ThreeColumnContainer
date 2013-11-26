@@ -1,9 +1,8 @@
 SplitPanelContainer
 ===================
 
-This is a Xamarin.iOS MvvmCross iPad Presenter and View Container to present views (within a navigation controller) as either single views, Split menu/sub menu/detail view or modal view
-
-
+This is a Xamarin.iOS View Container to enable the presentation of a 3 column split view controller consisting of a menu, flyout sub menu, and detail view.
+Included is a MvvmCross iPad Presenter to present views (within a navigation controller) as either a single view, custom split view or a modal view.
 
 
 This project is still a work in progress and is not complete nor fully functional.
