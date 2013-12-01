@@ -9,6 +9,11 @@ namespace Splitter.Touch.Views.PanelContainers
     public class MenuPanelContainer : PanelContainer
     {
         private readonly SplitPanelView _parent;
+        public static int Width
+        {
+            get { return 200; }
+        }
+
         protected override RectangleF PanelPosition
         {
             get
@@ -17,11 +22,12 @@ namespace Splitter.Touch.Views.PanelContainers
                 {
                     X = _parent.PanelPosition.X + 0,
                     Y = _parent.PanelPosition.Y + 0,
-                    Width = 100,
+                    Width = Width,
                     Height = _parent.PanelPosition.Height
                 };
             }
         }
+
 
         #region Construction
         /// <summary>

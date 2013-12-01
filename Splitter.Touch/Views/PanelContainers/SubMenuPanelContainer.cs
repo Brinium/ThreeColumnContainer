@@ -9,19 +9,24 @@ namespace Splitter.Touch.Views.PanelContainers
     public class SubMenuPanelContainer : PanelContainer
     {
         private readonly SplitPanelView _parent;
+        private static int Width
+        {
+            get { return 200; }
+        }
         protected override RectangleF PanelPosition
         {
             get
             {
                 return new RectangleF
                 {
-                    X = _parent.PanelPosition.X + 100,
+                    X = _parent.PanelPosition.X + Width,
                     Y = _parent.PanelPosition.Y + 0,
-                    Width = 100,
+                    Width = Width,
                     Height = _parent.PanelPosition.Height
                 };
             }
         }
+
 
         #region Construction
         /// <summary>
@@ -49,13 +54,13 @@ namespace Splitter.Touch.Views.PanelContainers
         public override void TransitionPanel(UIViewController newChildView)
         {
             PanelView.WillMoveToParentViewController(null);
-                            Transition(PanelView, newChildView, 1.0, UIViewAnimationOptions.CurveEaseOut, () => { },
-                                (finished) =>
-                                {
-                                    PanelView.RemoveFromParentViewController();
-                                    newChildView.DidMoveToParentViewController(this);
-                                    PanelView = newChildView;
-                                });
+            Transition(PanelView, newChildView, 1.0, UIViewAnimationOptions.CurveEaseOut, () => { },
+                (finished) =>
+                {
+                    PanelView.RemoveFromParentViewController();
+                    newChildView.DidMoveToParentViewController(this);
+                    PanelView = newChildView;
+                });
         }
     }
 }

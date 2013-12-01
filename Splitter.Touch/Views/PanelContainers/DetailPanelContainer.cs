@@ -15,9 +15,9 @@ namespace Splitter.Touch.Views.PanelContainers
             {
                 return new RectangleF
                 {
-                    X = _parent.PanelPosition.X + 100,
+                    X = _parent.PanelPosition.X + MenuPanelContainer.Width,
                     Y = _parent.PanelPosition.Y + 0,
-                    Width = _parent.PanelPosition.Width - 100,
+                    Width = _parent.PanelPosition.Width - MenuPanelContainer.Width,
                     Height = _parent.PanelPosition.Height
                 };
             }

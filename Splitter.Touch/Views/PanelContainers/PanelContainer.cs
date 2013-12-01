@@ -11,9 +11,14 @@ namespace Splitter.Touch.Views.PanelContainers
         /// <value>The panel position.</value>
         protected abstract RectangleF PanelPosition { get; }
 
+        public static int ChildMargin
+        {
+            get { return 5; }
+        }
+
         protected virtual RectangleF ChildViewPosition
         {
-            get { return new RectangleF(new PointF(1, 1), new SizeF(PanelPosition.Width - 2, PanelPosition.Height - 2)); }
+            get { return new RectangleF(new PointF(ChildMargin, ChildMargin), new SizeF(PanelPosition.Width - ChildMargin * 2, PanelPosition.Height - ChildMargin * 2)); }
         }
 
         /// <summary>

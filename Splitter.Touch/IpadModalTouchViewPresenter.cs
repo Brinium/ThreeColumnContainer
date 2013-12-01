@@ -64,6 +64,7 @@ namespace Splitter.Touch
                         if (splitContainer == null) return;
                         splitContainer.ChangePanelContents(new DetailPanelContainer(viewController, splitContainer), PanelType.DetailPanel);
                         break;
+
                     case ViewType.SingleView:
                         base.Show(view);
                         break;
