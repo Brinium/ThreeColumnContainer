@@ -207,10 +207,10 @@ namespace Splitter.Touch.Views.PanelContainers
             if (activePanel != null)
                 activePanel.SwapChildView(newChildView);
             else
-                DisplayContentController(newChildView, type);
+                DisplayNewChildView(newChildView, type);
         }
 
-        protected void DisplayContentController(UIViewController newChildView, PanelType type)
+        protected void DisplayNewChildView(UIViewController newChildView, PanelType type)
         {
             PanelContainer newPanel = null;
             switch (type)
