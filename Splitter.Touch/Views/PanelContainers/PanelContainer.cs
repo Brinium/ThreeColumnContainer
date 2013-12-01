@@ -191,9 +191,6 @@ namespace Splitter.Touch.Views.PanelContainers
                 View.AddSubview(newChildView.View);
                 newChildView.WillMoveToParentViewController(null);
                 TransitionPanel(newChildView);
-                PanelView.RemoveFromParentViewController();
-                newChildView.DidMoveToParentViewController(this);
-                PanelView = newChildView;
             }
         }
 
