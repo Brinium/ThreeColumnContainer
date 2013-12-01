@@ -45,5 +45,16 @@ namespace Splitter.Touch.Views.PanelContainers
             base.ViewWillAppear(animated);
             View.BackgroundColor = UIColor.Orange;
         }
+
+        public override void TransitionPanel(UIViewController newChildView)
+        {
+            Transition(PanelView, newChildView, 1.0, UIViewAnimationOptions.CurveEaseOut, () => { },
+                (finished) =>
+                {
+                    PanelView.RemoveFromParentViewController();
+                    newChildView.DidMoveToParentViewController(this);
+                    PanelView = newChildView;
+                });
+        }
     }
 }

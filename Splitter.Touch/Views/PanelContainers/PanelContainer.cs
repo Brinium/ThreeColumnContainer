@@ -23,7 +23,7 @@ namespace Splitter.Touch.Views.PanelContainers
         public UIViewController PanelView
         {
             get;
-            private set;
+            protected set;
         }
 
         /// <summary>
@@ -184,19 +184,14 @@ namespace Splitter.Touch.Views.PanelContainers
             {
                 AddChildViewController(newChildView);
                 View.AddSubview(newChildView.View);
-                //newChildView.WillMoveToParentViewController(null);
-                PanelView.WillMoveToParentViewController(null);
-                //                Transition(PanelView, newChildView, 1.0, UIViewAnimationOptions.CurveEaseOut, () => { },
-                //                    (finished) =>
-                //                    {
-                //                        PanelView.RemoveFromParentViewController();
-                //                        newChildView.DidMoveToParentViewController(this);
-                //                        PanelView = newChildView;
-                //                    });
+                newChildView.WillMoveToParentViewController(null);
+                TransitionPanel(newChildView);
                 PanelView.RemoveFromParentViewController();
                 newChildView.DidMoveToParentViewController(this);
                 PanelView = newChildView;
             }
         }
+
+        public abstract void TransitionPanel(UIViewController newChildView);
     }
 }

@@ -82,6 +82,66 @@ namespace Splitter.Touch.Views.PanelContainers
         //                _firstTime = false;
         //            }
         //        }
+
+        /// <summary>
+        /// Called every time the Panel is about to be shown
+        /// </summary>
+        /// <param name="animated">If set to <c>true</c> animated.</param>
+        public override void ViewWillAppear(bool animated)
+        {
+            if (MenuContainer != null)
+                MenuContainer.ViewWillAppear(animated);
+            if (SubMenuContainer != null)
+                SubMenuContainer.ViewWillAppear(animated);
+            if (DetailContainer != null)
+                DetailContainer.ViewWillAppear(animated);
+            base.ViewWillAppear(animated);
+        }
+
+        /// <summary>
+        /// Called every time after the Panel is shown
+        /// </summary>
+        /// <param name="animated">If set to <c>true</c> animated.</param>
+        public override void ViewDidAppear(bool animated)
+        {
+            if (MenuContainer != null)
+                MenuContainer.ViewDidAppear(animated);
+            if (SubMenuContainer != null)
+                SubMenuContainer.ViewDidAppear(animated);
+            if (DetailContainer != null)
+                DetailContainer.ViewDidAppear(animated);
+            base.ViewDidAppear(animated);
+        }
+
+        /// <summary>
+        /// Called whenever the Panel is about to be hidden
+        /// </summary>
+        /// <param name="animated">If set to <c>true</c> animated.</param>
+        public override void ViewWillDisappear(bool animated)
+        {
+            if (MenuContainer != null)
+                MenuContainer.ViewWillDisappear(animated);
+            if (SubMenuContainer != null)
+                SubMenuContainer.ViewWillDisappear(animated);
+            if (DetailContainer != null)
+                DetailContainer.ViewWillDisappear(animated);
+            base.ViewWillDisappear(animated);
+        }
+
+        /// <summary>
+        /// Called every time after the Panel is hidden
+        /// </summary>
+        /// <param name="animated">If set to <c>true</c> animated.</param>
+        public override void ViewDidDisappear(bool animated)
+        {
+            if (MenuContainer != null)
+                MenuContainer.ViewDidDisappear(animated);
+            if (SubMenuContainer != null)
+                SubMenuContainer.ViewDidDisappear(animated);
+            if (DetailContainer != null)
+                DetailContainer.ViewDidDisappear(animated);
+            base.ViewDidDisappear(animated);
+        }
         #endregion
 
         #region overrides to pass to container

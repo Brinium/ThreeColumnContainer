@@ -15,7 +15,7 @@ namespace Splitter.Touch
         {
             _window = new UIWindow(UIScreen.MainScreen.Bounds);
 
-            var presenter = new IpadTouchViewPresenter(this, _window);
+            var presenter = new IpadModalTouchViewPresenter(this, _window);
             var setup = new Setup(this, presenter);
             setup.Initialize();
 

@@ -15,20 +15,20 @@ namespace Splitter.Touch
     /// Manages automatically creating the Sliding panel view controller and its 
     /// requisite panel views as well as showing normal views
     /// </summary>
-    public class IpadTouchViewPresenter : MvxModalSupportTouchViewPresenter
+    public class IpadModalTouchViewPresenter : MvxModalSupportTouchViewPresenter
     {
         /// <summary>
         /// the application's window.  We hang onto this so we can use it later
         /// </summary>
         private UIWindow _window;
-        private SplitPanelView _splitPanelContainer;
+        //private SplitPanelView _splitPanelContainer;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IpadTouchViewPresenter"/> class.
+        /// Initializes a new instance of the <see cref="IpadModalTouchViewPresenter"/> class.
         /// </summary>
         /// <param name="applicationDelegate">Application delegate.</param>
         /// <param name="window">Window.</param>
-        public IpadTouchViewPresenter(UIApplicationDelegate applicationDelegate, UIWindow window) :
+        public IpadModalTouchViewPresenter(UIApplicationDelegate applicationDelegate, UIWindow window) :
             base(applicationDelegate, window)
         {
             // specialized construction logic goes here
@@ -44,23 +44,25 @@ namespace Splitter.Touch
                 switch (viewController.TypeOfView)
                 {
                     case ViewType.MenuView:
-                        _splitPanelContainer = Mvx.Resolve<IMvxTouchViewCreator>().CreateView(new SplitPanelViewModel()) as SplitPanelView;
-                        if (_splitPanelContainer != null)
+                        var splitContainer = Mvx.Resolve<IMvxTouchViewCreator>().CreateView(new SplitPanelViewModel()) as SplitPanelView;
+                        if (splitContainer != null)
                         {
-                            _splitPanelContainer.MenuContainer = new MenuPanelContainer(viewController, _splitPanelContainer);
-                            _splitPanelContainer.DetailContainer = new DetailPanelContainer(new EmptyView(UIColor.Green), _splitPanelContainer);
-                            base.Show(_splitPanelContainer);
+                            splitContainer.MenuContainer = new MenuPanelContainer(viewController, splitContainer);
+                            splitContainer.DetailContainer = new DetailPanelContainer(new EmptyView(UIColor.Green), splitContainer);
+                            this.Show(splitContainer);
                         }
                         break;
 
                     case ViewType.SubMenuView:
-                        if (_splitPanelContainer == null) return;
-                        _splitPanelContainer.ChangePanelContents(new SubMenuPanelContainer(viewController, _splitPanelContainer), PanelType.SubMenuPanel);
+                        splitContainer = MasterNavigationController.TopViewController as SplitPanelView;
+                        if (splitContainer == null) return;
+                        splitContainer.ChangePanelContents(new SubMenuPanelContainer(viewController, splitContainer), PanelType.SubMenuPanel);
                         break;
 
                     case ViewType.DetailView:
-                        if (_splitPanelContainer == null) return;
-                        _splitPanelContainer.ChangePanelContents(new DetailPanelContainer(viewController, _splitPanelContainer), PanelType.DetailPanel);
+                        splitContainer = MasterNavigationController.TopViewController as SplitPanelView;
+                        if (splitContainer == null) return;
+                        splitContainer.ChangePanelContents(new DetailPanelContainer(viewController, splitContainer), PanelType.DetailPanel);
                         break;
                     case ViewType.SingleView:
                         base.Show(view);
