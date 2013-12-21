@@ -8,19 +8,19 @@ namespace Splitter.Touch.Views.PanelContainers
     /// </summary>
     public class SubMenuPanelContainer : PanelContainer
     {
-        private readonly SplitPanelView _parent;
+        private readonly SplitDetailPanelContainer _parent;
         private static int Width
         {
             get { return 200; }
         }
-        protected override RectangleF PanelPosition
+        public override RectangleF PanelPosition
         {
             get
             {
                 return new RectangleF
                 {
-                    X = _parent.PanelPosition.X + Width,
-                    Y = _parent.PanelPosition.Y + 0,
+                    X = 0, //_parent.PanelPosition.X + Width,
+                    Y = 0, //_parent.PanelPosition.Y + 0,
                     Width = Width,
                     Height = _parent.PanelPosition.Height
                 };
@@ -34,7 +34,7 @@ namespace Splitter.Touch.Views.PanelContainers
         /// </summary>
         /// <param name="panel">Panel.</param>
         /// <param name="parent">parent split panel</param>
-        public SubMenuPanelContainer(UIViewController panel, SplitPanelView parent)
+        public SubMenuPanelContainer(UIViewController panel, SplitDetailPanelContainer parent)
             : base(panel)
         {
             _parent = parent;

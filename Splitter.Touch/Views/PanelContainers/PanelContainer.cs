@@ -9,7 +9,7 @@ namespace Splitter.Touch.Views.PanelContainers
         /// Gets the panel position.
         /// </summary>
         /// <value>The panel position.</value>
-        protected abstract RectangleF PanelPosition { get; }
+        public abstract RectangleF PanelPosition { get; }
 
         public static int ChildMargin
         {
@@ -173,7 +173,7 @@ namespace Splitter.Touch.Views.PanelContainers
 
         #endregion
 
-        public void SwapChildView(UIViewController newChildView)
+        public virtual void SwapChildView(UIViewController newChildView)
         {
             if (newChildView == null) return;
 

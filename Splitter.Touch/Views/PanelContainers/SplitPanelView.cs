@@ -12,9 +12,7 @@ namespace Splitter.Touch.Views.PanelContainers
         private bool _firstTime = true;
         public PanelContainer MenuContainer { get; set; }
 
-        public PanelContainer SubMenuContainer { get; set; }
-
-        public PanelContainer DetailContainer { get; set; }
+        public SplitDetailPanelContainer SplitContainer { get; set; }
 
         public RectangleF PanelPosition
         {
@@ -44,7 +42,7 @@ namespace Splitter.Touch.Views.PanelContainers
             //MenuContainer = new MenuPanelContainer(new EmptyView(UIColor.Yellow));
             MenuContainer = menu;
             //DetailContainer = new DetailPanelContainer(new EmptyView(UIColor.Magenta));
-            DetailContainer = detail;
+            SplitContainer = new SplitDetailPanelContainer(detail, this);
         }
         #endregion
 
@@ -56,8 +54,8 @@ namespace Splitter.Touch.Views.PanelContainers
 
             AddChildViewController(MenuContainer);
             View.AddSubview(MenuContainer.View);
-            AddChildViewController(DetailContainer);
-            View.AddSubview(DetailContainer.View);
+            AddChildViewController(SplitContainer);
+            View.AddSubview(SplitContainer.View);
         }
 
         /// <summary>
@@ -91,10 +89,8 @@ namespace Splitter.Touch.Views.PanelContainers
         {
             if (MenuContainer != null)
                 MenuContainer.ViewWillAppear(animated);
-            if (SubMenuContainer != null)
-                SubMenuContainer.ViewWillAppear(animated);
-            if (DetailContainer != null)
-                DetailContainer.ViewWillAppear(animated);
+            if (SplitContainer != null)
+                SplitContainer.ViewWillAppear(animated); ;
             base.ViewWillAppear(animated);
         }
 
@@ -106,10 +102,8 @@ namespace Splitter.Touch.Views.PanelContainers
         {
             if (MenuContainer != null)
                 MenuContainer.ViewDidAppear(animated);
-            if (SubMenuContainer != null)
-                SubMenuContainer.ViewDidAppear(animated);
-            if (DetailContainer != null)
-                DetailContainer.ViewDidAppear(animated);
+            if (SplitContainer != null)
+                SplitContainer.ViewDidAppear(animated);
             base.ViewDidAppear(animated);
         }
 
@@ -121,10 +115,8 @@ namespace Splitter.Touch.Views.PanelContainers
         {
             if (MenuContainer != null)
                 MenuContainer.ViewWillDisappear(animated);
-            if (SubMenuContainer != null)
-                SubMenuContainer.ViewWillDisappear(animated);
-            if (DetailContainer != null)
-                DetailContainer.ViewWillDisappear(animated);
+            if (SplitContainer != null)
+                SplitContainer.ViewWillDisappear(animated);
             base.ViewWillDisappear(animated);
         }
 
@@ -136,10 +128,8 @@ namespace Splitter.Touch.Views.PanelContainers
         {
             if (MenuContainer != null)
                 MenuContainer.ViewDidDisappear(animated);
-            if (SubMenuContainer != null)
-                SubMenuContainer.ViewDidDisappear(animated);
-            if (DetailContainer != null)
-                DetailContainer.ViewDidDisappear(animated);
+            if (SplitContainer != null)
+                SplitContainer.ViewDidDisappear(animated);
             base.ViewDidDisappear(animated);
         }
         #endregion
@@ -157,10 +147,8 @@ namespace Splitter.Touch.Views.PanelContainers
             base.WillRotate(toInterfaceOrientation, duration);
             if (MenuContainer != null)
                 MenuContainer.WillRotate(toInterfaceOrientation, duration);
-            if (SubMenuContainer != null)
-                SubMenuContainer.WillRotate(toInterfaceOrientation, duration);
-            if (DetailContainer != null)
-                DetailContainer.WillRotate(toInterfaceOrientation, duration);
+            if (SplitContainer != null)
+                SplitContainer.WillRotate(toInterfaceOrientation, duration);
         }
 
         /// <summary>
@@ -173,10 +161,8 @@ namespace Splitter.Touch.Views.PanelContainers
             base.DidRotate(fromInterfaceOrientation);
             if (MenuContainer != null)
                 MenuContainer.DidRotate(fromInterfaceOrientation);
-            if (SubMenuContainer != null)
-                SubMenuContainer.DidRotate(fromInterfaceOrientation);
-            if (DetailContainer != null)
-                DetailContainer.DidRotate(fromInterfaceOrientation);
+            if (SplitContainer != null)
+                SplitContainer.DidRotate(fromInterfaceOrientation);
         }
 
         #endregion
@@ -193,9 +179,9 @@ namespace Splitter.Touch.Views.PanelContainers
                 case PanelType.MenuPanel:
                     return MenuContainer;
                 case PanelType.SubMenuPanel:
-                    return SubMenuContainer;
+                    return SplitContainer.SubMenuContainer;
                 case PanelType.DetailPanel:
-                    return DetailContainer;
+                    return SplitContainer.DetailContainer;
                 default:
                     return null;
             }
@@ -219,10 +205,26 @@ namespace Splitter.Touch.Views.PanelContainers
                     newPanel = new MenuPanelContainer(newChildView, this);
                     break;
                 case PanelType.SubMenuPanel:
-                    newPanel = new SubMenuPanelContainer(newChildView, this);
+                    if (SplitContainer == null)
+                    {
+                        newPanel = new SplitDetailPanelContainer(this);
+                        ((SplitDetailPanelContainer)newPanel).SubMenuContainer = new SubMenuPanelContainer(newChildView, ((SplitDetailPanelContainer)newPanel));
+                    }
+                    else
+                    {
+                        SplitContainer.ChangePanelContents(newChildView, type);
+                    }
                     break;
                 case PanelType.DetailPanel:
-                    newPanel = new DetailPanelContainer(newChildView, this);
+                    if (SplitContainer == null)
+                    {
+                        newPanel = new SplitDetailPanelContainer(this);
+                        ((SplitDetailPanelContainer)newPanel).DetailContainer = new DetailPanelContainer(newChildView, ((SplitDetailPanelContainer)newPanel));
+                    }
+                    else
+                    {
+                        SplitContainer.ChangePanelContents(newChildView, type);
+                    }
                     break;
             }
 

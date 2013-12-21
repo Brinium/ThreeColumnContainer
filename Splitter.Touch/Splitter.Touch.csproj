@@ -101,6 +101,7 @@
     <Compile Include="Views\PanelContainers\PanelContainer.cs" />
     <Compile Include="Views\PanelContainers\PanelType.cs" />
     <Compile Include="Views\PanelContainers\SplitPanelView.cs" />
+    <Compile Include="Views\PanelContainers\SplitDetailPanelContainer.cs" />
     <Compile Include="Views\PanelContainers\SubMenuPanelContainer.cs" />
     <Compile Include="Views\SubMenuView.cs" />
     <Compile Include="Views\MenuView.cs" />

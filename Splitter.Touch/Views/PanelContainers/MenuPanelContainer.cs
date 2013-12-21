@@ -14,7 +14,7 @@ namespace Splitter.Touch.Views.PanelContainers
             get { return 200; }
         }
 
-        protected override RectangleF PanelPosition
+        public override RectangleF PanelPosition
         {
             get
             {

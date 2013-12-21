@@ -48,7 +48,8 @@ namespace Splitter.Touch
                         if (splitContainer != null)
                         {
                             splitContainer.MenuContainer = new MenuPanelContainer(viewController, splitContainer);
-                            splitContainer.DetailContainer = new DetailPanelContainer(new EmptyView(UIColor.Green), splitContainer);
+                            splitContainer.SplitContainer = new SplitDetailPanelContainer(splitContainer);
+                            splitContainer.SplitContainer.DetailContainer = new DetailPanelContainer(new EmptyView(UIColor.Green), splitContainer.SplitContainer);
                             this.Show(splitContainer);
                         }
                         break;
@@ -56,13 +57,13 @@ namespace Splitter.Touch
                     case ViewType.SubMenuView:
                         splitContainer = MasterNavigationController.TopViewController as SplitPanelView;
                         if (splitContainer == null) return;
-                        splitContainer.ChangePanelContents(new SubMenuPanelContainer(viewController, splitContainer), PanelType.SubMenuPanel);
+                        splitContainer.ChangePanelContents(new SubMenuPanelContainer(viewController, splitContainer.SplitContainer), PanelType.SubMenuPanel);
                         break;
 
                     case ViewType.DetailView:
                         splitContainer = MasterNavigationController.TopViewController as SplitPanelView;
                         if (splitContainer == null) return;
-                        splitContainer.ChangePanelContents(new DetailPanelContainer(viewController, splitContainer), PanelType.DetailPanel);
+                        splitContainer.ChangePanelContents(new DetailPanelContainer(viewController, splitContainer.SplitContainer), PanelType.DetailPanel);
                         break;
 
                     case ViewType.SingleView:
