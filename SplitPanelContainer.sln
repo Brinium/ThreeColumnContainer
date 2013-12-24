@@ -84,6 +84,11 @@ Global
 		{BCE33D50-B6CC-4C53-96D5-95CA4C62755D}.Release|Mixed Platforms.ActiveCfg = Release|iPhone
 		{BCE33D50-B6CC-4C53-96D5-95CA4C62755D}.Release|Mixed Platforms.Build.0 = Release|iPhone
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Splitter.Touch\Splitter.Touch.csproj
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

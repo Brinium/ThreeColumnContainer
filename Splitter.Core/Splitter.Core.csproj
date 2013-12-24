@@ -44,10 +44,10 @@
     <Compile Include="ViewModels\BlueViewModel.cs" />
     <Compile Include="ViewModels\SubMenuViewModel.cs" />
     <Compile Include="ViewModels\ModalViewModel.cs" />
-    <Compile Include="ViewModels\SplitPanelViewModel.cs" />
     <Compile Include="ViewModels\SinglePageViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\RedViewModel.cs" />
+    <Compile Include="ViewModels\MasterPanelViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.CrossCore">

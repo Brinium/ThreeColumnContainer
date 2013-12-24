@@ -1,8 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPad.7.0" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Splitter.Touch/IpadModalTouchViewPresenter.cs">
+    <Files>
+      <File FileName="Splitter.Touch/Views/PanelContainers/MasterPanelContainer.cs" Line="12" Column="34" />
+      <File FileName="Splitter.Touch/Views/MasterPanelView.cs" Line="8" Column="30" />
+      <File FileName="Splitter.Touch/IpadModalTouchViewPresenter.cs" Line="49" Column="33" />
+      <File FileName="Splitter.Core/ViewModels/MasterPanelViewModel.cs" Line="6" Column="35" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Touch/IpadModalTouchViewPresenter.cs" line="41" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

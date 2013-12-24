@@ -1,29 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
+using Cirrious.MvvmCross.Touch.Views;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 namespace Splitter.Touch.Views.PanelContainers
 {
-	public class SplitDetailPanelContainer : PanelContainer
+	public partial class MasterPanelContainer : UIViewController
 	{
-		public PanelContainer SubMenuContainer { get; set; }
+		public PanelContainer MenuContainer { get; set; }
 
-		public PanelContainer DetailContainer { get; set; }
+		public SplitDetailPanelContainer SplitContainer { get; set; }
 
-		private readonly MasterPanelContainer _parent;
-
-		public override RectangleF PanelPosition {
+		public RectangleF PanelPosition {
 			get {
-				return new RectangleF {
-					X = _parent.PanelPosition.X + MenuPanelContainer.Width,
-					Y = _parent.PanelPosition.Y,
-					Width = _parent.PanelPosition.Width - MenuPanelContainer.Width,
-					Height = _parent.PanelPosition.Height
-				};
+				var height = NavigationController == null ? 44 : NavigationController.NavigationBar.Frame.Height;
+				return new RectangleF (new PointF (0, UIScreen.MainScreen.ApplicationFrame.Y + 12), new SizeF (UIScreen.MainScreen.ApplicationFrame.Width, UIScreen.MainScreen.ApplicationFrame.Height - height));
 			}
 		}
 
@@ -32,35 +25,22 @@ namespace Splitter.Touch.Views.PanelContainers
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SplitPanelView"/> class.
 		/// </summary>
-		public SplitDetailPanelContainer (MasterPanelContainer parent)
-			: base (new UIViewController ())
+		public MasterPanelContainer ()
 		{
-			_parent = parent;
+
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SplitPanelView"/> class.
 		/// </summary>
+		/// <param name="menu">Menu</param>
 		/// <param name="detail">Detail page</param>
-		/// <param name="parent">parent split panel</param>
-		public SplitDetailPanelContainer (MasterPanelContainer parent, DetailPanelContainer detail)
-			: base ((new UIViewController ()))
+		public MasterPanelContainer (MenuPanelContainer menu, DetailPanelContainer detail)
 		{
-			_parent = parent;
-			DetailContainer = detail;
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="SplitPanelView"/> class.
-		/// </summary>
-		/// <param name="detail">Detail page</param>
-		/// <param name="parent">parent split panel</param>
-		public SplitDetailPanelContainer (MasterPanelContainer parent, DetailPanelContainer detail, SubMenuPanelContainer subMenu)
-            : base (new UIViewController ())
-		{
-			_parent = parent;
-			DetailContainer = detail;
-			SubMenuContainer = subMenu;
+			//MenuContainer = new MenuPanelContainer(new EmptyView(UIColor.Yellow));
+			MenuContainer = menu;
+			//DetailContainer = new DetailPanelContainer(new EmptyView(UIColor.Magenta));
+			SplitContainer = new SplitDetailPanelContainer (this, detail);
 		}
 
 		#endregion
@@ -71,16 +51,11 @@ namespace Splitter.Touch.Views.PanelContainers
 		{
 			base.ViewDidLoad ();
 			View.Frame = PanelPosition;
-			View.BackgroundColor = UIColor.Brown;
 
-			if (DetailContainer != null) {
-				AddChildViewController (DetailContainer);
-				View.AddSubview (DetailContainer.View);
-			}
-			if (SubMenuContainer != null) {
-				AddChildViewController (SubMenuContainer);
-				View.AddSubview (SubMenuContainer.View);
-			}
+			AddChildViewController (MenuContainer);
+			View.AddSubview (MenuContainer.View);
+			AddChildViewController (SplitContainer);
+			View.AddSubview (SplitContainer.View);
 		}
 
 		/// <summary>
@@ -89,10 +64,10 @@ namespace Splitter.Touch.Views.PanelContainers
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		public override void ViewWillAppear (bool animated)
 		{
-			if (SubMenuContainer != null)
-				SubMenuContainer.ViewWillAppear (animated);
-			if (DetailContainer != null)
-				DetailContainer.ViewWillAppear (animated);
+			if (MenuContainer != null)
+				MenuContainer.ViewWillAppear (animated);
+			if (SplitContainer != null)
+				SplitContainer.ViewWillAppear (animated);
 			base.ViewWillAppear (animated);
 		}
 
@@ -102,10 +77,10 @@ namespace Splitter.Touch.Views.PanelContainers
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		public override void ViewDidAppear (bool animated)
 		{
-			if (SubMenuContainer != null)
-				SubMenuContainer.ViewDidAppear (animated);
-			if (DetailContainer != null)
-				DetailContainer.ViewDidAppear (animated);
+			if (MenuContainer != null)
+				MenuContainer.ViewDidAppear (animated);
+			if (SplitContainer != null)
+				SplitContainer.ViewDidAppear (animated);
 			base.ViewDidAppear (animated);
 		}
 
@@ -115,10 +90,10 @@ namespace Splitter.Touch.Views.PanelContainers
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		public override void ViewWillDisappear (bool animated)
 		{
-			if (SubMenuContainer != null)
-				SubMenuContainer.ViewWillDisappear (animated);
-			if (DetailContainer != null)
-				DetailContainer.ViewWillDisappear (animated);
+			if (MenuContainer != null)
+				MenuContainer.ViewWillDisappear (animated);
+			if (SplitContainer != null)
+				SplitContainer.ViewWillDisappear (animated);
 			base.ViewWillDisappear (animated);
 		}
 
@@ -128,10 +103,10 @@ namespace Splitter.Touch.Views.PanelContainers
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		public override void ViewDidDisappear (bool animated)
 		{
-			if (SubMenuContainer != null)
-				SubMenuContainer.ViewDidDisappear (animated);
-			if (DetailContainer != null)
-				DetailContainer.ViewDidDisappear (animated);
+			if (MenuContainer != null)
+				MenuContainer.ViewDidDisappear (animated);
+			if (SplitContainer != null)
+				SplitContainer.ViewDidDisappear (animated);
 			base.ViewDidDisappear (animated);
 		}
 
@@ -148,10 +123,10 @@ namespace Splitter.Touch.Views.PanelContainers
 		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
 		{
 			base.WillRotate (toInterfaceOrientation, duration);
-			if (SubMenuContainer != null)
-				SubMenuContainer.WillRotate (toInterfaceOrientation, duration);
-			if (DetailContainer != null)
-				DetailContainer.WillRotate (toInterfaceOrientation, duration);
+			if (MenuContainer != null)
+				MenuContainer.WillRotate (toInterfaceOrientation, duration);
+			if (SplitContainer != null)
+				SplitContainer.WillRotate (toInterfaceOrientation, duration);
 		}
 
 		/// <summary>
@@ -162,10 +137,10 @@ namespace Splitter.Touch.Views.PanelContainers
 		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
 		{
 			base.DidRotate (fromInterfaceOrientation);
-			if (SubMenuContainer != null)
-				SubMenuContainer.DidRotate (fromInterfaceOrientation);
-			if (DetailContainer != null)
-				DetailContainer.DidRotate (fromInterfaceOrientation);
+			if (MenuContainer != null)
+				MenuContainer.DidRotate (fromInterfaceOrientation);
+			if (SplitContainer != null)
+				SplitContainer.DidRotate (fromInterfaceOrientation);
 		}
 
 		#endregion
@@ -179,10 +154,12 @@ namespace Splitter.Touch.Views.PanelContainers
 		private PanelContainer GetPanel (PanelType type)
 		{
 			switch (type) {
+			case PanelType.MenuPanel:
+				return MenuContainer;
 			case PanelType.SubMenuPanel:
-				return SubMenuContainer;
+				return SplitContainer.SubMenuContainer;
 			case PanelType.DetailPanel:
-				return DetailContainer;
+				return SplitContainer.DetailContainer;
 			default:
 				return null;
 			}
@@ -201,11 +178,24 @@ namespace Splitter.Touch.Views.PanelContainers
 		{
 			PanelContainer newPanel = null;
 			switch (type) {
+			case PanelType.MenuPanel:
+				newPanel = new MenuPanelContainer (this, newChildView);
+				break;
 			case PanelType.SubMenuPanel:
-				newPanel = new SubMenuPanelContainer (this, newChildView);
+				if (SplitContainer == null) {
+					newPanel = new SplitDetailPanelContainer (this);
+					((SplitDetailPanelContainer)newPanel).SubMenuContainer = new SubMenuPanelContainer (((SplitDetailPanelContainer)newPanel), newChildView);
+				} else {
+					SplitContainer.ChangePanelContents (newChildView, type);
+				}
 				break;
 			case PanelType.DetailPanel:
-				newPanel = new DetailPanelContainer (this, newChildView);
+				if (SplitContainer == null) {
+					newPanel = new SplitDetailPanelContainer (this);
+					((SplitDetailPanelContainer)newPanel).DetailContainer = new DetailPanelContainer (((SplitDetailPanelContainer)newPanel), newChildView);
+				} else {
+					SplitContainer.ChangePanelContents (newChildView, type);
+				}
 				break;
 			}
 
@@ -214,17 +204,6 @@ namespace Splitter.Touch.Views.PanelContainers
 			AddChildViewController (newPanel);
 			View.AddSubview (newPanel.View);
 			newPanel.DidMoveToParentViewController (null);
-		}
-
-		public override void TransitionPanel (UIViewController newChildView)
-		{
-			Transition (PanelView, newChildView, 1.0, UIViewAnimationOptions.CurveEaseOut, () => {
-			},
-				(finished) => {
-					PanelView.RemoveFromParentViewController ();
-					newChildView.DidMoveToParentViewController (this);
-					PanelView = newChildView;
-				});
 		}
 
 		#endregion
