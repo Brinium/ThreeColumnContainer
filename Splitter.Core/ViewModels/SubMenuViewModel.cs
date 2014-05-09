@@ -10,5 +10,10 @@ namespace Splitter.Core.ViewModels
         {
             get { return new MvxCommand(() => ShowViewModel<ModalViewModel>()); }
         }
+
+        public ICommand CloseCommand
+        {
+            get { return new MvxCommand(() => Close(this)); }
+        }
     }
 }

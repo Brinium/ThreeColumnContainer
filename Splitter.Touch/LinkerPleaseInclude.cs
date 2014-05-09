@@ -4,32 +4,36 @@ using MonoTouch.UIKit;
 
 namespace Splitter.Touch
 {
-	// This class is never actually executed, but when Xamarin linking is enabled it does how to ensure types and properties
-	// are preserved in the deployed app
+    // This class is never actually executed, but when Xamarin linking is enabled it does how to ensure types and properties
+    // are preserved in the deployed app
     public class LinkerPleaseInclude
     {
         public void Include(UIButton uiButton)
         {
-            uiButton.TouchUpInside += (s, e) =>
-                                      uiButton.SetTitle(uiButton.Title(UIControlState.Normal), UIControlState.Normal);
+            uiButton.TouchUpInside += (s, e) => uiButton.SetTitle(uiButton.Title(UIControlState.Normal), UIControlState.Normal);
         }
 
         public void Include(UIBarButtonItem barButton)
         {
-            barButton.Clicked += (s, e) =>
-                                 barButton.Title = barButton.Title + "";
+            barButton.Clicked += (s, e) => barButton.Title = barButton.Title + "";
         }
 
         public void Include(UITextField textField)
         {
             textField.Text = textField.Text + "";
-            textField.EditingChanged += (sender, args) => { textField.Text = ""; };
+            textField.EditingChanged += (sender, args) =>
+            {
+                textField.Text = "";
+            };
         }
 
         public void Include(UITextView textView)
         {
             textView.Text = textView.Text + "";
-            textView.Changed += (sender, args) => { textView.Text = ""; };
+            textView.Changed += (sender, args) =>
+            {
+                textView.Text = "";
+            };
         }
 
         public void Include(UILabel label)
@@ -45,24 +49,36 @@ namespace Splitter.Touch
         public void Include(UIDatePicker date)
         {
             date.Date = date.Date.AddSeconds(1);
-            date.ValueChanged += (sender, args) => { date.Date = DateTime.MaxValue; };
+            date.ValueChanged += (sender, args) =>
+            {
+                date.Date = DateTime.MaxValue;
+            };
         }
 
         public void Include(UISlider slider)
         {
             slider.Value = slider.Value + 1;
-            slider.ValueChanged += (sender, args) => { slider.Value = 1; };
+            slider.ValueChanged += (sender, args) =>
+            {
+                slider.Value = 1;
+            };
         }
 
         public void Include(UISwitch sw)
         {
             sw.On = !sw.On;
-            sw.ValueChanged += (sender, args) => { sw.On = false; };
+            sw.ValueChanged += (sender, args) =>
+            {
+                sw.On = false;
+            };
         }
 
         public void Include(INotifyCollectionChanged changed)
         {
-            changed.CollectionChanged += (s,e) => { var test = string.Format("{0}{1}{2}{3}{4}", e.Action,e.NewItems, e.NewStartingIndex, e.OldItems, e.OldStartingIndex); } ;
+            changed.CollectionChanged += (s, e) =>
+            {
+                var test = string.Format("{0}{1}{2}{3}{4}", e.Action, e.NewItems, e.NewStartingIndex, e.OldItems, e.OldStartingIndex);
+            };
         }
     }
 }

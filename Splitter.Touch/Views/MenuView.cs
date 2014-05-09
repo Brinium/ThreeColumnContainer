@@ -20,31 +20,31 @@ namespace Splitter.Touch.Views
             View.BackgroundColor = UIColor.LightGray;
             
             var blue = UIButton.FromType(UIButtonType.RoundedRect);
-            blue.Frame = new RectangleF(0, 10, 98, 40);
+            blue.Frame = new RectangleF(5, 10, 98, 40);
             blue.Font = UIFont.FromName("Helvetica", 22);
             blue.SetTitle("Blue", UIControlState.Normal);
             Add(blue);
 
             var red = UIButton.FromType(UIButtonType.RoundedRect);
-            red.Frame = new RectangleF(0, 50, 98, 40);
+            red.Frame = new RectangleF(5, 50, 98, 40);
             red.Font = UIFont.FromName("Helvetica", 22);
             red.SetTitle("Red", UIControlState.Normal);
             Add(red);
 
             var model = UIButton.FromType(UIButtonType.RoundedRect);
-            model.Frame = new RectangleF(0, 90, 98, 40);
+            model.Frame = new RectangleF(5, 90, 98, 40);
             model.Font = UIFont.FromName("Helvetica", 22);
             model.SetTitle("Modal", UIControlState.Normal);
             Add(model);
 
             var single = UIButton.FromType(UIButtonType.RoundedRect);
-            single.Frame = new RectangleF(0, 130, 98, 40);
+            single.Frame = new RectangleF(5, 130, 98, 40);
             single.Font = UIFont.FromName("Helvetica", 22);
             single.SetTitle("Single", UIControlState.Normal);
             Add(single);
 
             var sub = UIButton.FromType(UIButtonType.RoundedRect);
-            sub.Frame = new RectangleF(0, 170, 98, 40);
+            sub.Frame = new RectangleF(5, 170, 98, 40);
             sub.Font = UIFont.FromName("Helvetica", 22);
             sub.SetTitle("Sub", UIControlState.Normal);
             Add(sub);
