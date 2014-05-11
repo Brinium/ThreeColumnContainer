@@ -34,6 +34,31 @@ namespace Splitter.Touch
             _window = window;
         }
 
+        public override void Close(IMvxViewModel toClose)
+        {
+            var viewController = toClose as BaseViewController;
+
+            var root = _window.RootViewController;
+
+            if (viewController != null)
+            {
+                switch (viewController.TypeOfView)
+                {
+                    case ViewType.MenuView:
+
+                        break;
+                    case ViewType.SubMenuView:
+                        break;
+                    case ViewType.DetailView:
+                        break;
+                    case ViewType.SingleView:
+                        break;
+                }
+            }
+            else
+                base.Close(toClose);
+        }
+
         public override void Show(IMvxTouchView view)
         {
             var viewController = view as BaseViewController;

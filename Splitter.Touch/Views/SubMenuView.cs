@@ -13,6 +13,7 @@ namespace Splitter.Touch.Views
         {
             TypeOfView = ViewType.SubMenuView;
         }
+
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
@@ -24,8 +25,15 @@ namespace Splitter.Touch.Views
             modalButton.SetTitle("Modal", UIControlState.Normal);
             Add(modalButton);
 
+            var closeButton = UIButton.FromType(UIButtonType.RoundedRect);
+            closeButton.Frame = new RectangleF(5, 50, 98, 40);
+            closeButton.Font = UIFont.FromName("Helvetica", 22);
+            closeButton.SetTitle("Close", UIControlState.Normal);
+            Add(closeButton);
+
             var set = this.CreateBindingSet<SubMenuView, Core.ViewModels.SubMenuViewModel>();
             set.Bind(modalButton).To(vm => vm.ModalCommand);
+            set.Bind(closeButton).To(vm => vm.CloseCommand);
             set.Apply();
         }
     }
