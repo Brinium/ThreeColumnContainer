@@ -5,16 +5,21 @@ using MonoTouch.UIKit;
 
 namespace Splitter.Touch.Views
 {
-	[Register ("RedView")]
-	public class RedView : DetailView
+	[Register ("BlueView")]
+	public class BlueView : BaseViewController
 	{
-        public override void ViewDidLoad ()
+		public BlueView ()
+		{
+			TypeOfView = ViewType.DetailView;
+		}
+
+		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			View.BackgroundColor = UIColor.Red;
+			View.BackgroundColor = UIColor.Blue;
 
 			var label = new UILabel ();
-			label.Text = "Red Label";
+			label.Text = "Blue Label";
 			label.Frame = new RectangleF (20, 20, 320, 50);
 			label.Font = UIFont.FromName ("Helvetica", 22);
 			Add (label);

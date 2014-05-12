@@ -1,10 +1,8 @@
 using System;
-using System.Linq;
 using Cirrious.CrossCore;
 using Cirrious.MvvmCross.Touch.Views;
 using Cirrious.MvvmCross.Touch.Views.Presenters;
 using Cirrious.MvvmCross.ViewModels;
-using Cirrious.MvvmCross.Views;
 using MonoTouch.UIKit;
 using Splitter.Core.ViewModels;
 using Splitter.Touch.Views;
@@ -38,35 +36,27 @@ namespace Splitter.Touch
 
         public override void Close(IMvxViewModel toClose)
         {
+            var viewController = toClose as BaseViewController;
+
             var root = _window.RootViewController;
-            var nav = MasterNavigationController;
-            var top = nav.TopViewController;
 
-            var type = toClose.GetType();
-            var viewContainer = Mvx.Resolve<IMvxViewsContainer>();
-            if (viewContainer == null) return;
-            var view = viewContainer.GetViewType(type);
-
-            if (view != null)
+            if (viewController != null)
             {
-                if (view == typeof (MenuView))
+                switch (viewController.TypeOfView)
                 {
-                    
-                }
-                else if (view == typeof (SubMenuView))
-                {
-                    
-                }
-                else if (view == typeof (DetailView))
-                {
-                    
-                }
-                else if (view == typeof (SingleView))
-                {
-                    
+                    case ViewType.MenuView:
+
+                        break;
+                    case ViewType.SubMenuView:
+                        break;
+                    case ViewType.DetailView:
+                        break;
+                    case ViewType.SingleView:
+                        break;
                 }
             }
-            base.Close(toClose);
+            else
+                base.Close(toClose);
         }
 
         public override void Show(IMvxTouchView view)
