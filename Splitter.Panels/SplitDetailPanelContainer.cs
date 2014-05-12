@@ -6,7 +6,7 @@ using System.Text;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace Splitter.Touch.Views.PanelContainers
+namespace Splitter.Panels
 {
     public class SplitDetailPanelContainer : PanelContainer
     {

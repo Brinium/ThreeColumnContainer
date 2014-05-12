@@ -90,13 +90,6 @@
     <Compile Include="Views\ModalView.cs" />
     <Compile Include="Views\BaseViewController.cs" />
     <Compile Include="Views\BlueView.cs" />
-    <Compile Include="Views\PanelContainers\DetailPanelContainer.cs" />
-    <Compile Include="Views\PanelContainers\EmptyView.cs" />
-    <Compile Include="Views\PanelContainers\MenuPanelContainer.cs" />
-    <Compile Include="Views\PanelContainers\PanelContainer.cs" />
-    <Compile Include="Views\PanelContainers\PanelType.cs" />
-    <Compile Include="Views\PanelContainers\SplitDetailPanelContainer.cs" />
-    <Compile Include="Views\PanelContainers\SubMenuPanelContainer.cs" />
     <Compile Include="Views\SubMenuView.cs" />
     <Compile Include="Views\MenuView.cs" />
     <Compile Include="Views\RedView.cs" />
@@ -104,7 +97,6 @@
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
-    <Compile Include="Views\PanelContainers\MasterPanelContainer.cs" />
     <Compile Include="Views\MasterPanelView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +149,10 @@
     <ProjectReference Include="..\Splitter.Core\Splitter.Core.csproj">
       <Project>{9093E633-5614-432A-B1A0-264917D40FD5}</Project>
       <Name>Splitter.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Splitter.Panels\Splitter.Panels.csproj">
+      <Project>{B6B80A97-B989-4977-ABF6-19936247B136}</Project>
+      <Name>Splitter.Panels</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />

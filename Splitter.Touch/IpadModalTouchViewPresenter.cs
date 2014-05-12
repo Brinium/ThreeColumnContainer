@@ -5,8 +5,8 @@ using Cirrious.MvvmCross.Touch.Views.Presenters;
 using Cirrious.MvvmCross.ViewModels;
 using MonoTouch.UIKit;
 using Splitter.Core.ViewModels;
+using Splitter.Panels;
 using Splitter.Touch.Views;
-using Splitter.Touch.Views.PanelContainers;
 
 namespace Splitter.Touch
 {

@@ -1,9 +1,8 @@
 using System.Drawing;
-using Cirrious.MvvmCross.Touch.Views;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace Splitter.Touch.Views.PanelContainers
+namespace Splitter.Panels
 {
     [Register("EmptyView")]
     public class EmptyView : UIViewController

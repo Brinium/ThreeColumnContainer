@@ -5,7 +5,7 @@ using System.Text;
 using Cirrious.MvvmCross.Touch.Views;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using Splitter.Touch.Views.PanelContainers;
+using Splitter.Panels;
 
 namespace Splitter.Touch.Views
 {

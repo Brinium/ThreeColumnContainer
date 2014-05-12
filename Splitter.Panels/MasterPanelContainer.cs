@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Cirrious.MvvmCross.Touch.Views;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace Splitter.Touch.Views.PanelContainers
+namespace Splitter.Panels
 {
     public partial class MasterPanelContainer : UIViewController
     {

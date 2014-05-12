@@ -1,7 +1,7 @@
 using System.Drawing;
 using MonoTouch.UIKit;
 
-namespace Splitter.Touch.Views.PanelContainers
+namespace Splitter.Panels
 {
 	public abstract class PanelContainer : UIViewController
 	{

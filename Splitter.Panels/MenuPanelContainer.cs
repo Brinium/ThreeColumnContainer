@@ -1,7 +1,7 @@
 using System.Drawing;
 using MonoTouch.UIKit;
 
-namespace Splitter.Touch.Views.PanelContainers
+namespace Splitter.Panels
 {
     /// <summary>
     /// Container class for Sliding Panels located on the left edge of the device screen
