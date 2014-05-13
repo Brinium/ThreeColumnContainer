@@ -194,7 +194,7 @@ namespace Splitter.Panels
             View.Hidden = true;
         }
 
-        - (void)revealMenu
+/*        - (void)revealMenu
         {
             [UIView animateWithDuration:0.3f animations:^{
                 CGRect frame = _contentViewController.view.frame;
@@ -220,7 +220,7 @@ namespace Splitter.Panels
             } completion:^(BOOL finished) {
                 [self setMenuIsOpen:NO];
             }];
-        }
+        }*/
 
         #endregion
 
