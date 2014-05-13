@@ -10,7 +10,52 @@ namespace Splitter.Panels
     {
         public PanelContainer MenuContainer { get; set; }
 
-        public SplitDetailPanelContainer SplitContainer { get; set; }
+        public SubMenuPanelContainer SubMenuContainer { get; set; }
+
+        public DetailPanelContainer DetailContainer { get; set; }
+
+        public RectangleF MenuFrame
+        {
+            get
+            {
+                return new RectangleF
+                {
+                    X = View.Frame.X,
+                    Y = View.Frame.Y + 5,
+                    Width = MenuPanelContainer.Width,
+                    Height = View.Frame.Height - 10
+                };
+            }
+        }
+
+        public RectangleF SubMenuFrame
+        {
+            get
+            {
+                return new RectangleF
+                {
+                    X = (MenuContainer != null ? MenuFrame.X + MenuFrame.Width : 0),
+                    Y = View.Frame.Y + 5,
+                    Width = SubMenuPanelContainer.Width,
+                    Height = View.Frame.Height - 10
+                };
+            }
+        }
+
+        public RectangleF DetailFrame
+        {
+            get
+            {
+                var x = (MenuContainer != null ? MenuFrame.X + MenuFrame.Width : 0) + (SubMenuContainer != null ? SubMenuFrame.X + SubMenuFrame.Width : 0);
+                return new RectangleF
+                {
+                    X = x,
+                    Y = View.Frame.Y + 5,
+                    Width = View.Frame.Width - x,
+                    Height = View.Frame.Height - 10
+                };
+            }
+        }
 
         #region Construction/Destruction
 
@@ -33,7 +78,8 @@ namespace Splitter.Panels
             //MenuContainer = new MenuPanelContainer(new EmptyView(UIColor.Yellow));
             MenuContainer = menu;
             //DetailContainer = new DetailPanelContainer(new EmptyView(UIColor.Magenta));
-            SplitContainer = new SplitDetailPanelContainer(this, detail);
+            SubMenuContainer = null;
+            DetailContainer = new DetailPanelContainer(this, detail);
         }
 
         #endregion
@@ -82,10 +128,21 @@ namespace Splitter.Panels
             base.ViewDidLoad();
             View.Frame = CreateViewPosition();
 
-            AddChildViewController(MenuContainer);
-            View.AddSubview(MenuContainer.View);
-            AddChildViewController(SplitContainer);
-            View.AddSubview(SplitContainer.View);
+            if (MenuContainer != null)
+            {
+                AddChildViewController(MenuContainer);
+                View.AddSubview(MenuContainer.View);
+            }
+            if (SubMenuContainer != null)
+            {
+                AddChildViewController(SubMenuContainer);
+                View.AddSubview(SubMenuContainer.View);
+            }
+            if (DetailContainer != null)
+            {
+                AddChildViewController(DetailContainer);
+                View.AddSubview(DetailContainer.View);
+            }
         }
 
         /// <summary>
@@ -96,8 +153,10 @@ namespace Splitter.Panels
         {
             if (MenuContainer != null)
                 MenuContainer.ViewWillAppear(animated);
-            if (SplitContainer != null)
-                SplitContainer.ViewWillAppear(animated);
+            if (SubMenuContainer != null)
+                SubMenuContainer.ViewWillAppear(animated);
+            if (DetailContainer != null)
+                DetailContainer.ViewWillAppear(animated);
             base.ViewWillAppear(animated);
         }
 
@@ -109,8 +168,10 @@ namespace Splitter.Panels
         {
             if (MenuContainer != null)
                 MenuContainer.ViewDidAppear(animated);
-            if (SplitContainer != null)
-                SplitContainer.ViewDidAppear(animated);
+            if (SubMenuContainer != null)
+                SubMenuContainer.ViewWillAppear(animated);
+            if (DetailContainer != null)
+                DetailContainer.ViewWillAppear(animated);
             base.ViewDidAppear(animated);
         }
 
@@ -122,8 +183,10 @@ namespace Splitter.Panels
         {
             if (MenuContainer != null)
                 MenuContainer.ViewWillDisappear(animated);
-            if (SplitContainer != null)
-                SplitContainer.ViewWillDisappear(animated);
+            if (SubMenuContainer != null)
+                SubMenuContainer.ViewWillAppear(animated);
+            if (DetailContainer != null)
+                DetailContainer.ViewWillAppear(animated);
             base.ViewWillDisappear(animated);
         }
 
@@ -135,8 +198,10 @@ namespace Splitter.Panels
         {
             if (MenuContainer != null)
                 MenuContainer.ViewDidDisappear(animated);
-            if (SplitContainer != null)
-                SplitContainer.ViewDidDisappear(animated);
+            if (SubMenuContainer != null)
+                SubMenuContainer.ViewWillAppear(animated);
+            if (DetailContainer != null)
+                DetailContainer.ViewWillAppear(animated);
             base.ViewDidDisappear(animated);
         }
 
@@ -155,8 +220,10 @@ namespace Splitter.Panels
             base.WillRotate(toInterfaceOrientation, duration);
             if (MenuContainer != null)
                 MenuContainer.WillRotate(toInterfaceOrientation, duration);
-            if (SplitContainer != null)
-                SplitContainer.WillRotate(toInterfaceOrientation, duration);
+            if (SubMenuContainer != null)
+                SubMenuContainer.WillRotate(toInterfaceOrientation, duration);
+            if (DetailContainer != null)
+                DetailContainer.WillRotate(toInterfaceOrientation, duration);
         }
 
         /// <summary>
@@ -169,8 +236,10 @@ namespace Splitter.Panels
             base.DidRotate(fromInterfaceOrientation);
             if (MenuContainer != null)
                 MenuContainer.DidRotate(fromInterfaceOrientation);
-            if (SplitContainer != null)
-                SplitContainer.DidRotate(fromInterfaceOrientation);
+            if (SubMenuContainer != null)
+                SubMenuContainer.DidRotate(fromInterfaceOrientation);
+            if (DetailContainer != null)
+                DetailContainer.DidRotate(fromInterfaceOrientation);
         }
 
         #endregion
@@ -188,9 +257,9 @@ namespace Splitter.Panels
                 case PanelType.MenuPanel:
                     return MenuContainer;
                 case PanelType.SubMenuPanel:
-                    return SplitContainer.SubMenuContainer;
+                    return SubMenuContainer;
                 case PanelType.DetailPanel:
-                    return SplitContainer.DetailContainer;
+                    return DetailContainer;
                 default:
                     return null;
             }
@@ -200,7 +269,7 @@ namespace Splitter.Panels
         {
             var activePanel = GetPanel(type);
             if (activePanel != null)
-                activePanel.SwapChildView(newChildView);
+                activePanel.SwapChildView(newChildView, type);
             else
                 DisplayNewChildView(newChildView, type);
         }
@@ -214,26 +283,10 @@ namespace Splitter.Panels
                     newPanel = new MenuPanelContainer(this, newChildView);
                     break;
                 case PanelType.SubMenuPanel:
-                    if (SplitContainer == null)
-                    {
-                        newPanel = new SplitDetailPanelContainer(this);
-                        ((SplitDetailPanelContainer)newPanel).SubMenuContainer = new SubMenuPanelContainer(((SplitDetailPanelContainer)newPanel), newChildView);
-                    }
-                    else
-                    {
-                        SplitContainer.ChangePanelContents(newChildView, type);
-                    }
+                    newPanel = new SubMenuPanelContainer(this, newChildView);
                     break;
                 case PanelType.DetailPanel:
-                    if (SplitContainer == null)
-                    {
-                        newPanel = new SplitDetailPanelContainer(this);
-                        ((SplitDetailPanelContainer)newPanel).DetailContainer = new DetailPanelContainer(((SplitDetailPanelContainer)newPanel), newChildView);
-                    }
-                    else
-                    {
-                        SplitContainer.ChangePanelContents(newChildView, type);
-                    }
+                    newPanel = new DetailPanelContainer(this, newChildView);
                     break;
             }
 

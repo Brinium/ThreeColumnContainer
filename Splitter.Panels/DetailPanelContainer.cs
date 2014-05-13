@@ -8,7 +8,7 @@ namespace Splitter.Panels
     /// </summary>
     public class DetailPanelContainer : PanelContainer
     {
-        private readonly SplitDetailPanelContainer _parent;
+        private readonly MasterPanelContainer _parent;
 
         #region Construction
 
@@ -17,7 +17,7 @@ namespace Splitter.Panels
         /// </summary>
         /// <param name="panel">Panel.</param>
         /// <param name="parent">parent split panel</param>
-        public DetailPanelContainer(SplitDetailPanelContainer parent, UIViewController panel)
+        public DetailPanelContainer(MasterPanelContainer parent, UIViewController panel)
             : base(panel)
         {
             _parent = parent;
@@ -29,27 +29,23 @@ namespace Splitter.Panels
 
         protected override RectangleF VerticalViewFrame()
         {
-            return new RectangleF
-            {
-                X = 0,//_parent.PanelPosition.X,
-                Y = 0,//_parent.PanelPosition.Y,
-                Width = _parent.View.Frame.Width,
-                Height = _parent.View.Frame.Height
-            };
+            return _parent.DetailFrame;
         }
 
         protected override RectangleF HorizontalViewFrame()
         {
-            return new RectangleF
-            {
-                X = 0,//_parent.PanelPosition.X,
-                Y = 0,//_parent.PanelPosition.Y,
-                Width = _parent.View.Frame.Width,
-                Height = _parent.View.Frame.Height
-            };
+            return _parent.DetailFrame;
         }
 
         #endregion
+
+        #region ViewLifecycle
+
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+            //View.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
+        }
 
         /// <summary>
         /// Called every time the Panel is about to be shown
@@ -61,17 +57,6 @@ namespace Splitter.Panels
             View.BackgroundColor = UIColor.Purple;
         }
 
-        public override void TransitionPanel(UIViewController newChildView)
-        {
-            Transition(PanelView, newChildView, 1.0, UIViewAnimationOptions.CurveEaseOut, () =>
-            {
-            },
-                (finished) =>
-                {
-                    PanelView.RemoveFromParentViewController();
-                    newChildView.DidMoveToParentViewController(this);
-                    PanelView = newChildView;
-                });
-        }
+        #endregion
     }
 }

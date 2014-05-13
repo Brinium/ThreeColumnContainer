@@ -1,5 +1,6 @@
 using System.Drawing;
 using MonoTouch.UIKit;
+using MonoTouch.CoreGraphics;
 
 namespace Splitter.Panels
 {
@@ -8,7 +9,7 @@ namespace Splitter.Panels
     /// </summary>
     public class SubMenuPanelContainer : PanelContainer
     {
-        private readonly SplitDetailPanelContainer _parent;
+        private readonly MasterPanelContainer _parent;
 
         public static int Width { get { return 200; } }
 
@@ -19,7 +20,7 @@ namespace Splitter.Panels
         /// </summary>
         /// <param name="panel">Panel.</param>
         /// <param name="parent">parent split panel</param>
-        public SubMenuPanelContainer(SplitDetailPanelContainer parent, UIViewController panel)
+        public SubMenuPanelContainer(MasterPanelContainer parent, UIViewController panel)
             : base(panel)
         {
             _parent = parent;
@@ -31,29 +32,23 @@ namespace Splitter.Panels
 
         protected override RectangleF VerticalViewFrame()
         {
-            return new RectangleF
-            {
-                X = 5, //_parent.PanelPosition.X + Width,
-                Y = 5, //_parent.PanelPosition.Y + 0,
-                Width = Width - 10,
-                Height = _parent.View.Frame.Height - 10
-            };
+            return  _parent.SubMenuFrame;
         }
 
         protected override RectangleF HorizontalViewFrame()
         {
-            return new RectangleF
-            {
-                X = 5, //_parent.PanelPosition.X + Width,
-                Y = 5, //_parent.PanelPosition.Y + 0,
-                Width = Width - 10,
-                Height = _parent.View.Frame.Height - 10
-            };
+            return _parent.SubMenuFrame;
         }
 
         #endregion
 
         #region ViewLifecycle
+
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+            View.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
+        }
 
         /// <summary>
         /// Called every time the Panel is about to be shown
@@ -63,20 +58,12 @@ namespace Splitter.Panels
         {
             base.ViewWillAppear(animated);
             View.BackgroundColor = UIColor.Yellow;
-        }
 
-        public override void TransitionPanel(UIViewController newChildView)
-        {
-            PanelView.WillMoveToParentViewController(null);
-            Transition(PanelView, newChildView, 1.0, UIViewAnimationOptions.CurveEaseOut, () =>
-            {
-            },
-                (finished) =>
-                {
-                    PanelView.RemoveFromParentViewController();
-                    newChildView.DidMoveToParentViewController(this);
-                    PanelView = newChildView;
-                });
+
+            // Add a shadow to the top view so it looks like it is on top of the others
+            View.Layer.ShadowOpacity = 0.75f;
+            View.Layer.ShadowRadius = 10.0f;
+            View.Layer.ShadowColor = UIColor.Black.CGColor;
         }
 
         #endregion

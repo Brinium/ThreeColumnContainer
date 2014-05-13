@@ -73,8 +73,7 @@ namespace Splitter.Touch
                         {
                             masterView.MasterContainer = new MasterPanelContainer();
                             masterView.MasterContainer.MenuContainer = new MenuPanelContainer(masterView.MasterContainer, viewController);
-                            masterView.MasterContainer.SplitContainer = new SplitDetailPanelContainer(masterView.MasterContainer);
-                            masterView.MasterContainer.SplitContainer.DetailContainer = new DetailPanelContainer(masterView.MasterContainer.SplitContainer, new EmptyView(UIColor.Green));
+                            masterView.MasterContainer.DetailContainer = new DetailPanelContainer(masterView.MasterContainer, new EmptyView(UIColor.Green));
                             this.Show(masterView);
                         }
                         break;
@@ -83,14 +82,14 @@ namespace Splitter.Touch
                         masterView = MasterNavigationController.TopViewController as MasterPanelView;
                         if (masterView == null)
                             return;
-                        masterView.MasterContainer.ChangePanelContents(new SubMenuPanelContainer(masterView.MasterContainer.SplitContainer, viewController), PanelType.SubMenuPanel);
+                        masterView.MasterContainer.ChangePanelContents(new SubMenuPanelContainer(masterView.MasterContainer, viewController), PanelType.SubMenuPanel);
                         break;
 
                     case ViewType.DetailView:
                         masterView = MasterNavigationController.TopViewController as MasterPanelView;
                         if (masterView == null)
                             return;
-                        masterView.MasterContainer.ChangePanelContents(new DetailPanelContainer(masterView.MasterContainer.SplitContainer, viewController), PanelType.DetailPanel);
+                        masterView.MasterContainer.ChangePanelContents(new DetailPanelContainer(masterView.MasterContainer, viewController), PanelType.DetailPanel);
                         break;
 
                     case ViewType.SingleView:

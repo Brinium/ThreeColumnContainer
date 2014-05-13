@@ -31,24 +31,12 @@ namespace Splitter.Panels
 
         protected override RectangleF VerticalViewFrame()
         {
-            return new RectangleF
-            {
-                X = _parent.View.Frame.X + 5,
-                Y = _parent.View.Frame.Y + 5,
-                Width = Width - 10,
-                Height = _parent.View.Frame.Height - 10
-            };
+            return _parent.MenuFrame;
         }
 
         protected override RectangleF HorizontalViewFrame()
         {
-            return new RectangleF
-            {
-                X = _parent.View.Frame.X + 5,
-                Y = _parent.View.Frame.Y + 5,
-                Width = Width - 10,
-                Height = _parent.View.Frame.Height - 10
-            };
+            return _parent.MenuFrame;
         }
 
         #endregion
@@ -69,19 +57,6 @@ namespace Splitter.Panels
         {
             base.ViewWillAppear(animated);
             View.BackgroundColor = UIColor.Orange;
-        }
-
-        public override void TransitionPanel(UIViewController newChildView)
-        {
-            Transition(PanelView, newChildView, 1.0, UIViewAnimationOptions.CurveEaseOut, () =>
-            {
-            },
-                (finished) =>
-                {
-                    PanelView.RemoveFromParentViewController();
-                    newChildView.DidMoveToParentViewController(this);
-                    PanelView = newChildView;
-                });
         }
 
         #endregion

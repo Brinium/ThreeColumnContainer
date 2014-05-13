@@ -45,7 +45,6 @@
     <Compile Include="MenuPanelContainer.cs" />
     <Compile Include="PanelContainer.cs" />
     <Compile Include="PanelType.cs" />
-    <Compile Include="SplitDetailPanelContainer.cs" />
     <Compile Include="SubMenuPanelContainer.cs" />
   </ItemGroup>
 </Project>
