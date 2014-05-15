@@ -1,15 +1,22 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPad.7.0" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Splitter.Touch/Views/MasterPanelView.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Splitter.Touch/IpadModalTouchViewPresenter.cs">
     <Files>
-      <File FileName="Splitter.Panels/DetailPanelContainer.cs" Line="5" Column="2" />
-      <File FileName="Splitter.Touch/Views/BaseViewController.cs" Line="8" Column="22" />
-      <File FileName="Splitter.Touch/Views/MasterPanelView.cs" Line="3" Column="22" />
-      <File FileName="Splitter.Touch/IpadModalTouchViewPresenter.cs" Line="9" Column="28" />
+      <File FileName="Splitter.Panels/MasterPanelContainer.cs" Line="130" Column="40" />
+      <File FileName="Splitter.Panels/DetailPanelContainer.cs" Line="40" Column="19" />
+      <File FileName="Splitter.Panels/SubMenuPanelContainer.cs" Line="59" Column="13" />
+      <File FileName="Splitter.Panels/PanelContainer.cs" Line="108" Column="47" />
+      <File FileName="Splitter.Touch/IpadModalTouchViewPresenter.cs" Line="48" Column="18" />
+      <File FileName="Splitter.Panels/MenuPanelContainer.cs" Line="48" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/SplitDetailPanelContainer.cs" line="210" column="1" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/SplitDetailPanelContainer.cs" line="223" column="1" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/SplitDetailPanelContainer.cs" line="228" column="21" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Touch/IpadModalTouchViewPresenter.cs" line="47" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

@@ -32,10 +32,8 @@ namespace Splitter.Panels
         /// <value><c>true</c> if this instance is visible; otherwise, <c>false</c>.</value>
         public virtual bool IsVisible
         {
-            get
-            {
-                return !View.Hidden;
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -45,7 +43,7 @@ namespace Splitter.Panels
         public virtual SizeF Size
         {
             get;
-            private set;
+            set;
         }
 
         #region Construction / Destruction
@@ -53,20 +51,12 @@ namespace Splitter.Panels
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelContainer"/> class.
         /// </summary>
-        protected PanelContainer()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PanelContainer"/> class.
-        /// </summary>
         /// <param name="panel">Panel.</param>
-        protected PanelContainer(UIViewController panel)
+        protected PanelContainer(UIViewController view)
         {
-            PanelView = panel;
-            //View.Frame = PanelPosition;
-            //PanelView.View.Frame = ChildViewPosition;
-            Size = panel.View.Frame.Size;
+            PanelView = view;
+            Size = view.View.Frame.Size;
+            IsVisible = true;
         }
 
         #endregion
@@ -110,8 +100,6 @@ namespace Splitter.Panels
 
             AddChildViewController(PanelView);
             View.AddSubview(PanelView.View);
-
-            //Show();
         }
 
         /// <summary>
@@ -120,8 +108,8 @@ namespace Splitter.Panels
         /// <param name="animated">If set to <c>true</c> animated.</param>
         public override void ViewWillAppear(bool animated)
         {
-            //View.Frame = PanelPosition;
-            //PanelView.View.Frame = ChildViewPosition;
+            //View.Frame = CreateViewPosition();
+            //PanelView.View.Frame = CreateViewPosition();
             PanelView.ViewWillAppear(animated);
             base.ViewWillAppear(animated);
         }
@@ -132,8 +120,6 @@ namespace Splitter.Panels
         /// <param name="animated">If set to <c>true</c> animated.</param>
         public override void ViewDidAppear(bool animated)
         {
-            //View.Frame = PanelPosition;
-            //PanelView.View.Frame = ChildViewPosition;
             PanelView.ViewDidAppear(animated);
             base.ViewDidAppear(animated);
         }
@@ -157,70 +143,6 @@ namespace Splitter.Panels
             PanelView.ViewDidDisappear(animated);
             base.ViewDidDisappear(animated);
         }
-
-        #endregion
-
-        #region Visibility Control
-
-        /// <summary>
-        /// Toggle the visibility of this panel
-        /// </summary>
-        public virtual void Toggle()
-        {
-            if (View.Hidden)
-            {
-                Show();
-            }
-            else
-            {
-                Hide();
-            }
-        }
-
-        /// <summary>
-        /// Makes this Panel visible
-        /// </summary>
-        public virtual void Show()
-        {
-            View.Layer.ZPosition = -1;
-            View.Hidden = false;
-        }
-
-        /// <summary>
-        /// Hides this Panel
-        /// </summary>
-        public virtual void Hide()
-        {
-            View.Hidden = true;
-        }
-
-/*        - (void)revealMenu
-        {
-            [UIView animateWithDuration:0.3f animations:^{
-                CGRect frame = _contentViewController.view.frame;
-                frame.origin.x = self.view.frame.origin.x + self.view.frame.size.width - 60;
-                _contentViewController.view.frame = frame;
-            } completion:^(BOOL finished) {
-                [self setMenuIsOpen:YES];
-            }];
-
-            DDSlideController * __weak weakSelf = self;
-            _menuViewController.cellTappedBlock = ^(NSInteger index) {
-                [weakSelf displayViewControllerAtIndex:index];
-                [weakSelf hideMenu];
-            };
-        }
-
-        private void HideMenu
-        {
-            View.animateWithDuration:0.3f animations:^{
-                CGRect frame = _contentViewController.view.frame;
-                frame.origin.x = 0;
-                _contentViewController.view.frame = frame;
-            } completion:^(BOOL finished) {
-                [self setMenuIsOpen:NO];
-            }];
-        }*/
 
         #endregion
 

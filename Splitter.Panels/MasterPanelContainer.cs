@@ -21,9 +21,9 @@ namespace Splitter.Panels
                 return new RectangleF
                 {
                     X = View.Frame.X,
-                    Y = View.Frame.Y + 5,
+                    Y = View.Frame.Y,
                     Width = MenuPanelContainer.Width,
-                    Height = View.Frame.Height - 10
+                    Height = View.Frame.Height
                 };
             }
         }
@@ -35,9 +35,9 @@ namespace Splitter.Panels
                 return new RectangleF
                 {
                     X = (MenuContainer != null ? MenuFrame.X + MenuFrame.Width : 0),
-                    Y = View.Frame.Y + 5,
+                    Y = View.Frame.Y,
                     Width = SubMenuPanelContainer.Width,
-                    Height = View.Frame.Height - 10
+                    Height = View.Frame.Height
                 };
             }
         }
@@ -46,13 +46,13 @@ namespace Splitter.Panels
         {
             get
             {
-                var x = (MenuContainer != null ? MenuFrame.X + MenuFrame.Width : 0) + (SubMenuContainer != null ? SubMenuFrame.X + SubMenuFrame.Width : 0);
+                var x = SubMenuContainer != null && SubMenuContainer.IsVisible ? SubMenuFrame.X + SubMenuFrame.Width : MenuContainer != null ? MenuFrame.X + MenuFrame.Width : 0;
                 return new RectangleF
                 {
                     X = x,
-                    Y = View.Frame.Y + 5,
+                    Y = View.Frame.Y,
                     Width = View.Frame.Width - x,
-                    Height = View.Frame.Height - 10
+                    Height = View.Frame.Height
                 };
             }
         }
@@ -64,7 +64,10 @@ namespace Splitter.Panels
         /// </summary>
         public MasterPanelContainer()
         {
-
+            MenuContainer = new MenuPanelContainer(this, new EmptyView(UIColor.Yellow));
+            SubMenuContainer = new SubMenuPanelContainer(this, new EmptyView(UIColor.Brown));
+            //SubMenuContainer.IsVisible = false;
+            DetailContainer = new DetailPanelContainer(this, new EmptyView(UIColor.Magenta));
         }
 
         /// <summary>
@@ -72,14 +75,15 @@ namespace Splitter.Panels
         /// </summary>
         /// <param name="menu">Menu</param>
         /// <param name="detail">Detail page</param>
-        public MasterPanelContainer(MenuPanelContainer menu, DetailPanelContainer detail)
+        public MasterPanelContainer(MenuPanelContainer menu, SubMenuPanelContainer subMenu, DetailPanelContainer detail)
 			: this()
         {
             //MenuContainer = new MenuPanelContainer(new EmptyView(UIColor.Yellow));
             MenuContainer = menu;
             //DetailContainer = new DetailPanelContainer(new EmptyView(UIColor.Magenta));
-            SubMenuContainer = null;
-            DetailContainer = new DetailPanelContainer(this, detail);
+            SubMenuContainer = subMenu;
+            //SubMenuContainer.IsVisible = false;
+            DetailContainer = detail;
         }
 
         #endregion
@@ -101,6 +105,7 @@ namespace Splitter.Panels
 
         private RectangleF VerticalViewPosition()
         {
+            var bounds = UIScreen.MainScreen.Bounds;
             var navHeight = NavigationController.NavigationBarHidden ? 0 : NavigationController.NavigationBar.Frame.Height;
             var pointX = UIScreen.MainScreen.ApplicationFrame.X;
             var pointY = navHeight - 12;//UIScreen.MainScreen.ApplicationFrame.Y * 2;// + navHeight + UIApplication.SharedApplication.StatusBarFrame.Height;
@@ -111,6 +116,7 @@ namespace Splitter.Panels
 
         private RectangleF HorizontalViewPosition()
         {
+            var bounds = UIScreen.MainScreen.Bounds;
             var navHeight = NavigationController.NavigationBarHidden ? 0 : NavigationController.NavigationBar.Frame.Height;
             var pointX = UIScreen.MainScreen.ApplicationFrame.Y;
             var pointY = navHeight - 12;// - UIScreen.MainScreen.ApplicationFrame.X;// + navHeight;// + UIApplication.SharedApplication.StatusBarFrame.Width;
@@ -126,6 +132,7 @@ namespace Splitter.Panels
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
             View.Frame = CreateViewPosition();
 
             if (MenuContainer != null)
@@ -295,6 +302,30 @@ namespace Splitter.Panels
             AddChildViewController(newPanel);
             View.AddSubview(newPanel.View);
             newPanel.DidMoveToParentViewController(null);
+        }
+
+        public void ShowSubMenu()
+        {
+            UIView.Animate(0.3f, () =>
+            {
+                var frame = SubMenuContainer.View.Frame;
+                frame.X = SubMenuFrame.X;
+                SubMenuContainer.View.Frame = frame;
+            }, () =>
+            {
+            });
+        }
+
+        public void HideMenu()
+        {
+            UIView.Animate(0.3f, () =>
+            {
+                var frame = SubMenuContainer.View.Frame;
+                frame.X = 0;
+                SubMenuContainer.View.Frame = frame;
+            }, () =>
+            {
+            });
         }
 
         #endregion

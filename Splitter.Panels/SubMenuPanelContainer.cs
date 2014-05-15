@@ -32,7 +32,7 @@ namespace Splitter.Panels
 
         protected override RectangleF VerticalViewFrame()
         {
-            return  _parent.SubMenuFrame;
+            return _parent.SubMenuFrame;
         }
 
         protected override RectangleF HorizontalViewFrame()
@@ -47,7 +47,6 @@ namespace Splitter.Panels
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            View.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
         }
 
         /// <summary>
@@ -57,6 +56,8 @@ namespace Splitter.Panels
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
+
+            View.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
             View.BackgroundColor = UIColor.Yellow;
 
 
@@ -64,6 +65,7 @@ namespace Splitter.Panels
             View.Layer.ShadowOpacity = 0.75f;
             View.Layer.ShadowRadius = 10.0f;
             View.Layer.ShadowColor = UIColor.Black.CGColor;
+            View.Layer.ShadowPath = UIBezierPath.FromRect(View.Layer.Bounds).CGPath;
         }
 
         #endregion

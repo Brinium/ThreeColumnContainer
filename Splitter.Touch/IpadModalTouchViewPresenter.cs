@@ -7,6 +7,7 @@ using MonoTouch.UIKit;
 using Splitter.Core.ViewModels;
 using Splitter.Panels;
 using Splitter.Touch.Views;
+using Cirrious.MvvmCross.Views;
 
 namespace Splitter.Touch
 {
@@ -36,27 +37,31 @@ namespace Splitter.Touch
 
         public override void Close(IMvxViewModel toClose)
         {
-            var viewController = toClose as BaseViewController;
-
             var root = _window.RootViewController;
 
-            if (viewController != null)
+            var view = Mvx.Resolve<IMvxTouchViewCreator>().CreateView(toClose) as BaseViewController;
+
+            var masterView = MasterNavigationController.TopViewController as MasterPanelView;
+            if (masterView != null && view != null)
             {
-                switch (viewController.TypeOfView)
+                switch (view.TypeOfView)
                 {
                     case ViewType.MenuView:
-
+                        //close masterView or nav back
                         break;
                     case ViewType.SubMenuView:
+                        //masterView.ClosePanel(PanelType.SubMenuPanel);
                         break;
                     case ViewType.DetailView:
+                        //masterView.ClosePanel(PanelType.SubMenuPanel);
                         break;
                     case ViewType.SingleView:
+                        base.Close(toClose);
                         break;
                 }
             }
-            else
-                base.Close(toClose);
+
+            base.Close(toClose);
         }
 
         public override void Show(IMvxTouchView view)
@@ -82,14 +87,14 @@ namespace Splitter.Touch
                         masterView = MasterNavigationController.TopViewController as MasterPanelView;
                         if (masterView == null)
                             return;
-                        masterView.MasterContainer.ChangePanelContents(new SubMenuPanelContainer(masterView.MasterContainer, viewController), PanelType.SubMenuPanel);
+                        masterView.MasterContainer.ChangePanelContents(viewController, PanelType.SubMenuPanel);
                         break;
 
                     case ViewType.DetailView:
                         masterView = MasterNavigationController.TopViewController as MasterPanelView;
                         if (masterView == null)
                             return;
-                        masterView.MasterContainer.ChangePanelContents(new DetailPanelContainer(masterView.MasterContainer, viewController), PanelType.DetailPanel);
+                        masterView.MasterContainer.ChangePanelContents(viewController, PanelType.DetailPanel);
                         break;
 
                     case ViewType.SingleView:
