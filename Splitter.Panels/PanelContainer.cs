@@ -5,6 +5,8 @@ namespace Splitter.Panels
 {
     public abstract class PanelContainer : UIViewController
     {
+        protected readonly MasterPanelContainer _parent;
+
         /// <summary>
         /// Gets the panel position.
         /// </summary>
@@ -36,26 +38,17 @@ namespace Splitter.Panels
             set;
         }
 
-        /// <summary>
-        /// Gets the size of the panel
-        /// </summary>
-        /// <value>The size.</value>
-        public virtual SizeF Size
-        {
-            get;
-            set;
-        }
-
         #region Construction / Destruction
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelContainer"/> class.
         /// </summary>
         /// <param name="panel">Panel.</param>
-        protected PanelContainer(UIViewController view)
+        protected PanelContainer(MasterPanelContainer parent, UIViewController view, RectangleF frame)
         {
+            _parent = parent;
             PanelView = view;
-            Size = view.View.Frame.Size;
+            View.Frame = frame;
             IsVisible = true;
         }
 
@@ -95,8 +88,8 @@ namespace Splitter.Panels
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            View.Frame = CreateViewPosition();
-            PanelView.View.Frame = CreateChildViewPosition();
+            //View.Frame = CreateViewPosition();
+            //PanelView.View.Frame = CreateChildViewPosition();
 
             AddChildViewController(PanelView);
             View.AddSubview(PanelView.View);
@@ -152,7 +145,6 @@ namespace Splitter.Panels
                 return;
 
             newChildView.View.Frame = CreateChildViewPosition();
-            Size = newChildView.View.Frame.Size;
 
             if (PanelView == null)
             {

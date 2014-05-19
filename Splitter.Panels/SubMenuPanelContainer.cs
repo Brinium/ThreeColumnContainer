@@ -11,8 +11,6 @@ namespace Splitter.Panels
     {
         private readonly MasterPanelContainer _parent;
 
-        public static int Width { get { return 200; } }
-
         #region Construction
 
         /// <summary>
@@ -20,10 +18,9 @@ namespace Splitter.Panels
         /// </summary>
         /// <param name="panel">Panel.</param>
         /// <param name="parent">parent split panel</param>
-        public SubMenuPanelContainer(MasterPanelContainer parent, UIViewController panel)
-            : base(panel)
+        public SubMenuPanelContainer(MasterPanelContainer parent, UIViewController panel, RectangleF frame)
+            : base(parent, panel, frame)
         {
-            _parent = parent;
         }
 
         #endregion
@@ -32,12 +29,12 @@ namespace Splitter.Panels
 
         protected override RectangleF VerticalViewFrame()
         {
-            return _parent.SubMenuFrame;
+            return View.Frame;//_parent.SubMenuFrame;
         }
 
         protected override RectangleF HorizontalViewFrame()
         {
-            return _parent.SubMenuFrame;
+            return View.Frame;//_parent.SubMenuFrame;
         }
 
         #endregion

@@ -76,9 +76,9 @@ namespace Splitter.Touch
                         var masterView = Mvx.Resolve<IMvxTouchViewCreator>().CreateView(new MasterPanelViewModel()) as MasterPanelView;
                         if (masterView != null)
                         {
-                            masterView.MasterContainer = new MasterPanelContainer();
-                            masterView.MasterContainer.MenuContainer = new MenuPanelContainer(masterView.MasterContainer, viewController);
-                            masterView.MasterContainer.DetailContainer = new DetailPanelContainer(masterView.MasterContainer, new EmptyView(UIColor.Green));
+                            masterView.MasterContainer = new MasterPanelContainer(150, 200);
+                            masterView.MasterContainer.ChangePanelContents(viewController, PanelType.MenuPanel);
+                            masterView.MasterContainer.ChangePanelContents(new EmptyView(UIColor.Green), PanelType.DetailPanel);
                             this.Show(masterView);
                         }
                         break;
@@ -88,6 +88,7 @@ namespace Splitter.Touch
                         if (masterView == null)
                             return;
                         masterView.MasterContainer.ChangePanelContents(viewController, PanelType.SubMenuPanel);
+                        masterView.MasterContainer.ShowSubMenu();
                         break;
 
                     case ViewType.DetailView:
