@@ -328,6 +328,50 @@ namespace Splitter.Panels
             });
         }
 
+        private void ShowHidePSubViewModel()
+        {
+            if (SubMenuContainer.IsVisible)
+            {
+                // Hide the panel and change the button's text
+                var currLeftPanelRect = SubMenuContainer.View.Frame;
+                currLeftPanelRect.X -= currLeftPanelRect.Size.Width / 2;
+                var currRightPanelRect = DetailContainer.View.Frame;
+                currRightPanelRect.X = 0;
+                currRightPanelRect.Size.Width += currLeftPanelRect.Size.Width;
+                // 1. Hide the panel
+                UIView.Animate(0.5, () =>
+                {
+                    // b. Move left panel from (0, 0, w, h) to (-w, 0, w, h)
+                    SubMenuContainer.View.Frame = currLeftPanelRect;
+                    // c. Expand right panel from (x, 0, w, h) to (0, 0, w + x, h)
+                    DetailContainer.View.Frame = currRightPanelRect;
+                }, () =>
+                {
+                    SubMenuContainer.IsVisible = false;
+                });
+            }
+            else
+            {
+                // Show the panel and change the button's text
+                // 1. Show the panel
+                UIView.Animate(0.5, () =>
+                {
+                    // b. Move left panel from (-w, 0, w, h) to (0, 0, w, h)
+                    var currLeftPanelRect = SubMenuContainer.View.Frame;
+                    currLeftPanelRect.X += currLeftPanelRect.Width / 2;
+                    DetailContainer.View.Frame = currLeftPanelRect;
+                    // c. Expand right panel from (0, 0, w, h) to (leftWidth, 0, w - leftWidth, h)
+                    var currRightPanelRect = SubMenuContainer.View.Frame;
+                    currRightPanelRect.X = currLeftPanelRect.Width;
+                    currRightPanelRect.Width -= currLeftPanelRect.Width;
+                    DetailContainer.View.Frame = currRightPanelRect;
+                }, () =>
+                {
+                    SubMenuContainer.IsVisible = true;
+                });
+            }
+        }
+
         #endregion
     }
 }
