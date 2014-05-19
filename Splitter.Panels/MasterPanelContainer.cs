@@ -29,25 +29,27 @@ namespace Splitter.Panels
 
         public float SubMenuMaxWidth { get; set; }
 
+        private float _subMenuCurrentWidth;
+
         public float SubMenuX()
         {
             return MenuContainer != null ? MenuContainer.View.Frame.X + MenuContainer.View.Frame.Width : 0;
         }
 
-        public RectangleF CreateSubMenuFrame(bool isVisible)
+        public RectangleF CreateSubMenuFrame()
         {
             return new RectangleF
             {
                 X = SubMenuX(),
                 Y = View.Frame.Y,
-                Width = isVisible ? SubMenuMaxWidth : 0,
+                Width = _subMenuCurrentWidth,
                 Height = View.Frame.Height
             };
         }
 
         public RectangleF CreateDetailFrame()
         {
-            var x = SubMenuContainer != null && SubMenuContainer.IsVisible ? SubMenuContainer.View.Frame.X + SubMenuContainer.View.Frame.Width : MenuContainer != null ? MenuContainer.View.Frame.X + MenuContainer.View.Frame.Width + 20 : 0;
+            var x = SubMenuContainer != null && SubMenuContainer.View.Frame.Width < SubMenuMaxWidth ? SubMenuContainer.View.Frame.X + SubMenuContainer.View.Frame.Width : MenuContainer != null ? MenuContainer.View.Frame.X + MenuContainer.View.Frame.Width + 20 : 0;
             return new RectangleF
             {
                 X = x,
@@ -72,7 +74,7 @@ namespace Splitter.Panels
             SubMenuContainer = new SubMenuPanelContainer(this, new EmptyView(UIColor.Brown), CreateSubMenuFrame(true));
             //SubMenuContainer.IsVisible = false;
 
-            DetailContainer = new DetailPanelContainer(this, new EmptyView(UIColor.Magenta), CreateDetailFrame());
+            DetailContainer = new DetailPanelContainer(this, new EmptyView(UIColor.Magenta), );
         }
 
         /// <summary>
@@ -110,6 +112,7 @@ namespace Splitter.Panels
 
         private RectangleF VerticalViewPosition()
         {
+            var frame = UIScreen.MainScreen.ApplicationFrame;
             var bounds = UIScreen.MainScreen.Bounds;
             var navHeight = NavigationController.NavigationBarHidden ? 0 : NavigationController.NavigationBar.Frame.Height;
             var pointX = UIScreen.MainScreen.ApplicationFrame.X;
@@ -121,6 +124,8 @@ namespace Splitter.Panels
 
         private RectangleF HorizontalViewPosition()
         {
+
+            var frame = UIScreen.MainScreen.ApplicationFrame;
             var bounds = UIScreen.MainScreen.Bounds;
             var navHeight = NavigationController.NavigationBarHidden ? 0 : NavigationController.NavigationBar.Frame.Height;
             var pointX = UIScreen.MainScreen.ApplicationFrame.Y;
@@ -292,13 +297,13 @@ namespace Splitter.Panels
             switch (type)
             {
                 case PanelType.MenuPanel:
-                    newPanel = new MenuPanelContainer(this, newChildView, CreateMenuFrame());
+                    newPanel = new MenuPanelContainer(this, newChildView, new SizeF(150, UIScreen.MainScreen.ApplicationFrame.Height));
                     break;
                 case PanelType.SubMenuPanel:
-                    newPanel = new SubMenuPanelContainer(this, newChildView, CreateSubMenuFrame(true));
+                    newPanel = new SubMenuPanelContainer(this, newChildView, new SizeF(200, UIScreen.MainScreen.ApplicationFrame.Height));
                     break;
                 case PanelType.DetailPanel:
-                    newPanel = new DetailPanelContainer(this, newChildView, CreateDetailFrame());
+                    newPanel = new DetailPanelContainer(this, newChildView);
                     break;
             }
 
@@ -342,7 +347,7 @@ namespace Splitter.Panels
                 currLeftPanelRect.X -= currLeftPanelRect.Size.Width / 2;
                 var currRightPanelRect = DetailContainer.View.Frame;
                 currRightPanelRect.X = 0;
-                currRightPanelRect.Size.Width += currLeftPanelRect.Size.Width;
+                currRightPanelRect.Width += currLeftPanelRect.Width;
                 // 1. Hide the panel
                 UIView.Animate(0.5, () =>
                 {
