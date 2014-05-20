@@ -29,13 +29,13 @@ namespace Splitter.Panels
         }
 
         /// <summary>
-        /// Gets the size of the panel
+        /// Gets a value indicating whether the panel is currently showing
         /// </summary>
-        /// <value>The size.</value>
-        public virtual SizeF Size
+        /// <value><c>true</c> if this instance is visible; otherwise, <c>false</c>.</value>
+        public virtual bool IsVisible
         {
             get;
-            private set;
+            set;
         }
 
         #region Construction / Destruction
@@ -44,11 +44,38 @@ namespace Splitter.Panels
         /// Initializes a new instance of the <see cref="PanelContainer"/> class.
         /// </summary>
         /// <param name="panel">Panel.</param>
-        protected PanelContainer(MasterPanelContainer parent, UIViewController view, SizeF size)
+        protected PanelContainer(MasterPanelContainer parent, UIViewController view, RectangleF frame)
         {
             _parent = parent;
             PanelView = view;
-            Size = size;
+            View.Frame = frame;
+            IsVisible = true;
+        }
+
+        #endregion
+
+        #region Panel Sizing
+
+        protected RectangleF CreateViewPosition()
+        {
+            var orient = UIApplication.SharedApplication.StatusBarOrientation;
+            switch (orient)
+            {
+                case UIInterfaceOrientation.LandscapeLeft:
+                case UIInterfaceOrientation.LandscapeRight:
+                    return HorizontalViewFrame();
+                default:
+                    return VerticalViewFrame();
+            }
+        }
+
+        protected abstract RectangleF VerticalViewFrame();
+
+        protected abstract RectangleF HorizontalViewFrame();
+
+        private RectangleF CreateChildViewPosition()
+        {
+            return new RectangleF(new PointF(ChildMargin, ChildMargin), new SizeF(View.Frame.Width - ChildMargin * 2, View.Frame.Height - ChildMargin * 2));
         }
 
         #endregion
@@ -61,8 +88,8 @@ namespace Splitter.Panels
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-            View.Frame = UIScreen.MainScreen.ApplicationFrame;
+            //View.Frame = CreateViewPosition();
+            //PanelView.View.Frame = CreateChildViewPosition();
 
             AddChildViewController(PanelView);
             View.AddSubview(PanelView.View);
@@ -74,27 +101,8 @@ namespace Splitter.Panels
         /// <param name="animated">If set to <c>true</c> animated.</param>
         public override void ViewWillAppear(bool animated)
         {
-            var frame = UIScreen.MainScreen.ApplicationFrame;
-
-            if (InterfaceOrientation != UIInterfaceOrientation.Portrait)
-            {
-                frame.Width = UIScreen.MainScreen.ApplicationFrame.Height;
-                frame.Height = UIScreen.MainScreen.ApplicationFrame.Width;
-                frame.X = UIScreen.MainScreen.ApplicationFrame.Y;
-
-                if (UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.LandscapeLeft)
-                {
-                    frame.Y = UIScreen.MainScreen.ApplicationFrame.X;
-                }
-                else
-                {
-                    frame.Y = UIScreen.MainScreen.Bounds.Width - UIScreen.MainScreen.ApplicationFrame.Width;
-                }
-
-            }
-
-            View.Frame = frame;
-
+            //View.Frame = CreateViewPosition();
+            //PanelView.View.Frame = CreateViewPosition();
             PanelView.ViewWillAppear(animated);
             base.ViewWillAppear(animated);
         }

@@ -11,43 +11,30 @@ namespace Splitter.Panels
     {
         private readonly MasterPanelContainer _parent;
 
-        /// <summary>
-        /// Gets the panel position.
-        /// </summary>
-        /// <value>The panel position.</value>
-        public RectangleF PanelPosition
-        {
-            get
-            {
-                return new RectangleF
-                {
-                    X = View.Bounds.Width - Size.Width,
-                    Y = -View.Frame.Y,
-                    Width = Size.Width,
-                    Height = View.Bounds.Height
-                };
-            }
-        }
-
-        private bool _isVisible;
-        public bool IsVisible
-        {
-            get { return _isVisible; }
-            set { _isVisible = value; }
-        }
-
-
         #region Construction
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MenuPanelContainer"/> class.
         /// </summary>
         /// <param name="panel">Panel.</param>
         /// <param name="parent">parent split panel</param>
-        /// <param name="size">panel size</param>
-        public SubMenuPanelContainer(MasterPanelContainer parent, UIViewController panel, SizeF size)
-            : base(parent, panel, size)
+        public SubMenuPanelContainer(MasterPanelContainer parent, UIViewController panel, RectangleF frame)
+            : base(parent, panel, frame)
         {
-            _isVisible = true;
+        }
+
+        #endregion
+
+        #region Panel Sizing
+
+        protected override RectangleF VerticalViewFrame()
+        {
+            return View.Frame;//_parent.SubMenuFrame;
+        }
+
+        protected override RectangleF HorizontalViewFrame()
+        {
+            return View.Frame;//_parent.SubMenuFrame;
         }
 
         #endregion
@@ -57,8 +44,6 @@ namespace Splitter.Panels
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-            PanelView.View.Frame = PanelPosition;
         }
 
         /// <summary>
@@ -68,8 +53,6 @@ namespace Splitter.Panels
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
-
-            PanelView.View.Frame = PanelPosition;
 
             View.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
             View.BackgroundColor = UIColor.Yellow;

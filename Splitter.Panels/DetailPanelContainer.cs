@@ -8,34 +8,30 @@ namespace Splitter.Panels
     /// </summary>
     public class DetailPanelContainer : PanelContainer
     {
-        /// <summary>
-        /// Gets the panel position.
-        /// </summary>
-        /// <value>The panel position.</value>
-        public RectangleF PanelPosition
-        {
-            get
-            {
-                return new RectangleF
-                {
-                    X = View.Bounds.Width - Size.Width,
-                    Y = -View.Frame.Y,
-                    Width = Size.Width,
-                    Height = View.Bounds.Height
-                };
-            }
-        }
-
         #region Construction
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DetailPanelContainer"/> class.
         /// </summary>
         /// <param name="panel">Panel.</param>
         /// <param name="parent">parent split panel</param>
-        /// <param name="size">panel size</param>
-        public DetailPanelContainer(MasterPanelContainer parent, UIViewController panel, SizeF size)
-            : base(parent, panel, size)
+        public DetailPanelContainer(MasterPanelContainer parent, UIViewController panel, RectangleF frame)
+            : base(parent, panel, frame)
         {
+        }
+
+        #endregion
+
+        #region Panel Sizing
+
+        protected override RectangleF VerticalViewFrame()
+        {
+            return View.Frame;//_parent.DetailFrame;
+        }
+
+        protected override RectangleF HorizontalViewFrame()
+        {
+            return View.Frame;//_parent.DetailFrame;
         }
 
         #endregion
@@ -45,8 +41,7 @@ namespace Splitter.Panels
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-            PanelView.View.Frame = PanelPosition;
+            //View.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
         }
 
         /// <summary>
@@ -56,9 +51,6 @@ namespace Splitter.Panels
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
-
-            PanelView.View.Frame = PanelPosition;
-
             View.BackgroundColor = UIColor.Purple;
         }
 
