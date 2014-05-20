@@ -1,4 +1,4 @@
-SplitPanelContainer
+ThreeColumnContainer
 ===================
 
 This is a Xamarin.iOS View Container to enable the presentation of a 3 column split view controller consisting of a menu, flyout sub menu, and detail view.
