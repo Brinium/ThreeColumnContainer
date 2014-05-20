@@ -8,6 +8,8 @@ namespace Splitter.Panels
     /// </summary>
     public class DetailPanelContainer : PanelContainer
     {
+        public float OffsetX { get; set; }
+
         #region Construction
 
         /// <summary>
@@ -15,9 +17,10 @@ namespace Splitter.Panels
         /// </summary>
         /// <param name="panel">Panel.</param>
         /// <param name="parent">parent split panel</param>
-        public DetailPanelContainer(MasterPanelContainer parent, UIViewController panel, RectangleF frame)
-            : base(parent, panel, frame)
+        public DetailPanelContainer(MasterPanelContainer parent, UIViewController panel, float offsetX)
+            : base(parent, panel)
         {
+            OffsetX = offsetX;
         }
 
         #endregion
@@ -26,12 +29,12 @@ namespace Splitter.Panels
 
         protected override RectangleF VerticalViewFrame()
         {
-            return View.Frame;//_parent.DetailFrame;
+            return _parent.CreateDetailFrame();
         }
 
         protected override RectangleF HorizontalViewFrame()
         {
-            return View.Frame;//_parent.DetailFrame;
+            return _parent.CreateDetailFrame();
         }
 
         #endregion
@@ -41,7 +44,6 @@ namespace Splitter.Panels
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            //View.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
         }
 
         /// <summary>

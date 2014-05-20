@@ -8,13 +8,11 @@ namespace Splitter.Panels
 {
     public partial class MasterPanelContainer : UIViewController
     {
-        public PanelContainer MenuContainer { get; set; }
+        public MenuPanelContainer MenuContainer { get; set; }
 
         public SubMenuPanelContainer SubMenuContainer { get; set; }
 
         public DetailPanelContainer DetailContainer { get; set; }
-
-        public float MenuMaxWidth { get; set; }
 
         public RectangleF CreateMenuFrame()
         {
@@ -22,32 +20,30 @@ namespace Splitter.Panels
             {
                 X = View.Frame.X,
                 Y = View.Frame.Y,
-                Width = MenuMaxWidth,
+                Width = MenuContainer.Width,
                 Height = View.Frame.Height
             };
         }
-
-        public float SubMenuMaxWidth { get; set; }
 
         public float SubMenuX()
         {
             return MenuContainer != null ? MenuContainer.View.Frame.X + MenuContainer.View.Frame.Width : 0;
         }
 
-        public RectangleF CreateSubMenuFrame(bool isVisible)
+        public RectangleF CreateSubMenuFrame()
         {
             return new RectangleF
             {
                 X = SubMenuX(),
                 Y = View.Frame.Y,
-                Width = isVisible ? SubMenuMaxWidth : 0,
+                Width = SubMenuContainer.IsVisible ? SubMenuContainer.Width : 0,
                 Height = View.Frame.Height
             };
         }
 
         public RectangleF CreateDetailFrame()
         {
-            var x = SubMenuContainer != null && SubMenuContainer.IsVisible ? SubMenuContainer.View.Frame.X + SubMenuContainer.View.Frame.Width : MenuContainer != null ? MenuContainer.View.Frame.X + MenuContainer.View.Frame.Width + 20 : 0;
+            var x = SubMenuContainer != null && SubMenuContainer.IsVisible ? SubMenuContainer.View.Frame.X + SubMenuContainer.View.Frame.Width : MenuContainer != null ? MenuContainer.View.Frame.X + MenuContainer.View.Frame.Width : 0;
             return new RectangleF
             {
                 X = x,
@@ -64,15 +60,12 @@ namespace Splitter.Panels
         /// </summary>
         public MasterPanelContainer(float menuMaxWidth, float subMenuMaxWidth)
         {
-            MenuMaxWidth = menuMaxWidth;
-            SubMenuMaxWidth = subMenuMaxWidth;
+            MenuContainer = new MenuPanelContainer(this, new EmptyView(UIColor.Yellow), menuMaxWidth);
 
-            MenuContainer = new MenuPanelContainer(this, new EmptyView(UIColor.Yellow), CreateMenuFrame());
+            SubMenuContainer = new SubMenuPanelContainer(this, new EmptyView(UIColor.Brown), subMenuMaxWidth);
+            SubMenuContainer.IsVisible = false;
 
-            SubMenuContainer = new SubMenuPanelContainer(this, new EmptyView(UIColor.Brown), CreateSubMenuFrame(true));
-            //SubMenuContainer.IsVisible = false;
-
-            DetailContainer = new DetailPanelContainer(this, new EmptyView(UIColor.Magenta), CreateDetailFrame());
+            DetailContainer = new DetailPanelContainer(this, new EmptyView(UIColor.Magenta), menuMaxWidth + subMenuMaxWidth);
         }
 
         /// <summary>
@@ -82,9 +75,6 @@ namespace Splitter.Panels
         /// <param name="detail">Detail page</param>
         public MasterPanelContainer(float menuMaxWidth, float subMenuMaxWidth, MenuPanelContainer menu, SubMenuPanelContainer subMenu, DetailPanelContainer detail)
         {
-            MenuMaxWidth = menuMaxWidth;
-            SubMenuMaxWidth = subMenuMaxWidth;
-
             MenuContainer = menu;
             SubMenuContainer = subMenu;
             //SubMenuContainer.IsVisible = false;
@@ -138,17 +128,17 @@ namespace Splitter.Panels
         {
             base.ViewDidLoad();
 
-            View.Frame = CreateViewPosition();
+            View.Frame = UIScreen.MainScreen.ApplicationFrame;
 
-            if (MenuContainer != null)
-            {
-                AddChildViewController(MenuContainer);
-                View.AddSubview(MenuContainer.View);
-            }
             if (SubMenuContainer != null)
             {
                 AddChildViewController(SubMenuContainer);
                 View.AddSubview(SubMenuContainer.View);
+            }
+            if (MenuContainer != null)
+            {
+                AddChildViewController(MenuContainer);
+                View.AddSubview(MenuContainer.View);
             }
             if (DetailContainer != null)
             {
@@ -163,6 +153,8 @@ namespace Splitter.Panels
         /// <param name="animated">If set to <c>true</c> animated.</param>
         public override void ViewWillAppear(bool animated)
         {
+            View.Frame = CreateViewPosition();
+
             if (MenuContainer != null)
                 MenuContainer.ViewWillAppear(animated);
             if (SubMenuContainer != null)
@@ -292,13 +284,13 @@ namespace Splitter.Panels
             switch (type)
             {
                 case PanelType.MenuPanel:
-                    newPanel = new MenuPanelContainer(this, newChildView, CreateMenuFrame());
+                    newPanel = new MenuPanelContainer(this, newChildView, 150);
                     break;
                 case PanelType.SubMenuPanel:
-                    newPanel = new SubMenuPanelContainer(this, newChildView, CreateSubMenuFrame(true));
+                    newPanel = new SubMenuPanelContainer(this, newChildView, 200);
                     break;
                 case PanelType.DetailPanel:
-                    newPanel = new DetailPanelContainer(this, newChildView, CreateDetailFrame());
+                    newPanel = new DetailPanelContainer(this, newChildView, 350);
                     break;
             }
 
@@ -311,11 +303,11 @@ namespace Splitter.Panels
 
         public void ShowSubMenu()
         {
+            SubMenuContainer.IsVisible = true;
             UIView.Animate(0.3f, () =>
             {
-                var frame = SubMenuContainer.View.Frame;
-                frame.X = SubMenuX();
-                SubMenuContainer.View.Frame = frame;
+                SubMenuContainer.View.Frame = CreateSubMenuFrame();
+                DetailContainer.View.Frame = CreateDetailFrame();
             }, () =>
             {
             });
@@ -323,58 +315,14 @@ namespace Splitter.Panels
 
         public void HideMenu()
         {
+            SubMenuContainer.IsVisible = false;
             UIView.Animate(0.3f, () =>
             {
-                var frame = SubMenuContainer.View.Frame;
-                frame.X = 0;
-                SubMenuContainer.View.Frame = frame;
+                SubMenuContainer.View.Frame = CreateSubMenuFrame();
+                DetailContainer.View.Frame = CreateDetailFrame();
             }, () =>
             {
             });
-        }
-
-        private void ShowHideSubViewModel()
-        {
-            if (SubMenuContainer.IsVisible)
-            {
-                // Hide the panel and change the button's text
-                var currLeftPanelRect = SubMenuContainer.View.Frame;
-                currLeftPanelRect.X -= currLeftPanelRect.Size.Width / 2;
-                var currRightPanelRect = DetailContainer.View.Frame;
-                currRightPanelRect.X = 0;
-                currRightPanelRect.Size.Width += currLeftPanelRect.Size.Width;
-                // 1. Hide the panel
-                UIView.Animate(0.5, () =>
-                {
-                    // b. Move left panel from (0, 0, w, h) to (-w, 0, w, h)
-                    SubMenuContainer.View.Frame = currLeftPanelRect;
-                    // c. Expand right panel from (x, 0, w, h) to (0, 0, w + x, h)
-                    DetailContainer.View.Frame = currRightPanelRect;
-                }, () =>
-                {
-                    SubMenuContainer.IsVisible = false;
-                });
-            }
-            else
-            {
-                // Show the panel and change the button's text
-                // 1. Show the panel
-                UIView.Animate(0.5, () =>
-                {
-                    // b. Move left panel from (-w, 0, w, h) to (0, 0, w, h)
-                    var currLeftPanelRect = SubMenuContainer.View.Frame;
-                    currLeftPanelRect.X += currLeftPanelRect.Width / 2;
-                    DetailContainer.View.Frame = currLeftPanelRect;
-                    // c. Expand right panel from (0, 0, w, h) to (leftWidth, 0, w - leftWidth, h)
-                    var currRightPanelRect = SubMenuContainer.View.Frame;
-                    currRightPanelRect.X = currLeftPanelRect.Width;
-                    currRightPanelRect.Width -= currLeftPanelRect.Width;
-                    DetailContainer.View.Frame = currRightPanelRect;
-                }, () =>
-                {
-                    SubMenuContainer.IsVisible = true;
-                });
-            }
         }
 
         #endregion

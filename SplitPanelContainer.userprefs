@@ -1,13 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPad.7.0" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Splitter.Touch/IpadModalTouchViewPresenter.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Splitter.Panels/PanelContainer.cs">
     <Files>
-      <File FileName="Splitter.Panels/MasterPanelContainer.cs" Line="130" Column="40" />
-      <File FileName="Splitter.Panels/DetailPanelContainer.cs" Line="40" Column="19" />
-      <File FileName="Splitter.Panels/SubMenuPanelContainer.cs" Line="59" Column="13" />
-      <File FileName="Splitter.Panels/PanelContainer.cs" Line="108" Column="47" />
-      <File FileName="Splitter.Touch/IpadModalTouchViewPresenter.cs" Line="48" Column="18" />
-      <File FileName="Splitter.Panels/MenuPanelContainer.cs" Line="48" Column="32" />
+      <File FileName="Splitter.Panels/DetailPanelContainer.cs" Line="1" Column="1" />
+      <File FileName="Splitter.Panels/PanelContainer.cs" Line="56" Column="9" />
+      <File FileName="Splitter.Panels/MenuPanelContainer.cs" Line="1" Column="1" />
+      <File FileName="Splitter.Panels/SubMenuPanelContainer.cs" Line="1" Column="1" />
+      <File FileName="Splitter.Panels/MasterPanelContainer.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -16,6 +15,17 @@
       <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/SplitDetailPanelContainer.cs" line="223" column="1" />
       <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/SplitDetailPanelContainer.cs" line="228" column="21" />
       <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Touch/IpadModalTouchViewPresenter.cs" line="47" column="1" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/SubMenuPanelContainer.cs" line="44" column="1" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/SubMenuPanelContainer.cs" line="55" column="1" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/MasterPanelContainer.cs" line="308" column="24" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/SubMenuPanelContainer.cs" line="33" column="1" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/MasterPanelContainer.cs" line="97" column="1" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/MasterPanelContainer.cs" line="125" column="1" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/MasterPanelContainer.cs" line="112" column="1" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/MasterPanelContainer.cs" line="18" column="1" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/MasterPanelContainer.cs" line="38" column="1" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/MasterPanelContainer.cs" line="50" column="1" />
+      <Breakpoint file="/Users/sambowman/Documents/Projects/GitHub/SplitPanelContainer/Splitter.Panels/PanelContainer.cs" line="82" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

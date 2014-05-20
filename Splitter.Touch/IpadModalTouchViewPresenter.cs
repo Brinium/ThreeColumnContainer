@@ -50,7 +50,7 @@ namespace Splitter.Touch
                         //close masterView or nav back
                         break;
                     case ViewType.SubMenuView:
-                        //masterView.ClosePanel(PanelType.SubMenuPanel);
+                        masterView.MasterContainer.HideMenu();
                         break;
                     case ViewType.DetailView:
                         //masterView.ClosePanel(PanelType.SubMenuPanel);

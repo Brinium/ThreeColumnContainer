@@ -16,10 +16,6 @@
 	<array/>
 	<key>MinimumOSVersion</key>
 	<string>7.0</string>
-	<key>CFBundleDisplayName</key>
-	<string>n24</string>
-	<key>CFBundleIdentifier</key>
-	<string>n24</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>NSMainNibFile</key>
@@ -32,5 +28,11 @@
 		<string>Default@2x.png</string>
 		<string>Default-568h@2x.png</string>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string>Splitter</string>
+	<key>CFBundleIdentifier</key>
+	<string>Splitter</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 </dict>
 </plist>

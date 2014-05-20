@@ -28,28 +28,16 @@ namespace Splitter.Panels
             protected set;
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the panel is currently showing
-        /// </summary>
-        /// <value><c>true</c> if this instance is visible; otherwise, <c>false</c>.</value>
-        public virtual bool IsVisible
-        {
-            get;
-            set;
-        }
-
         #region Construction / Destruction
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelContainer"/> class.
         /// </summary>
         /// <param name="panel">Panel.</param>
-        protected PanelContainer(MasterPanelContainer parent, UIViewController view, RectangleF frame)
+        protected PanelContainer(MasterPanelContainer parent, UIViewController view)
         {
             _parent = parent;
             PanelView = view;
-            View.Frame = frame;
-            IsVisible = true;
         }
 
         #endregion
@@ -88,8 +76,9 @@ namespace Splitter.Panels
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
             //View.Frame = CreateViewPosition();
-            //PanelView.View.Frame = CreateChildViewPosition();
+            //PanelView.View.Frame = CreateViewPosition();
 
             AddChildViewController(PanelView);
             View.AddSubview(PanelView.View);
@@ -101,10 +90,13 @@ namespace Splitter.Panels
         /// <param name="animated">If set to <c>true</c> animated.</param>
         public override void ViewWillAppear(bool animated)
         {
-            //View.Frame = CreateViewPosition();
-            //PanelView.View.Frame = CreateViewPosition();
+            View.Frame = CreateViewPosition();
+            PanelView.View.Frame = CreateChildViewPosition();
+
             PanelView.ViewWillAppear(animated);
             base.ViewWillAppear(animated);
+
+            View.BackgroundColor = UIColor.White;
         }
 
         /// <summary>

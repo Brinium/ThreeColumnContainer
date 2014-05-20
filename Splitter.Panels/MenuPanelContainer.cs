@@ -8,6 +8,8 @@ namespace Splitter.Panels
     /// </summary>
     public class MenuPanelContainer : PanelContainer
     {
+        public float Width { get; set; }
+
         #region Construction
 
         /// <summary>
@@ -15,9 +17,10 @@ namespace Splitter.Panels
         /// </summary>
         /// <param name="panel">Panel.</param>
         /// <param name="parent">parent split panel</param>
-        public MenuPanelContainer(MasterPanelContainer parent, UIViewController panel, RectangleF frame)
-            : base(parent, panel, frame)
+        public MenuPanelContainer(MasterPanelContainer parent, UIViewController panel, float width)
+            : base(parent, panel)
         {
+            Width = width;
         }
 
         #endregion
@@ -26,12 +29,12 @@ namespace Splitter.Panels
 
         protected override RectangleF VerticalViewFrame()
         {
-            return View.Frame;//_parent.MenuFrame;
+            return _parent.CreateMenuFrame();
         }
 
         protected override RectangleF HorizontalViewFrame()
         {
-            return View.Frame;//_parent.MenuFrame;
+            return _parent.CreateMenuFrame();
         }
 
         #endregion
@@ -41,7 +44,6 @@ namespace Splitter.Panels
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            View.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
         }
 
         /// <summary>
@@ -51,6 +53,8 @@ namespace Splitter.Panels
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
+
+            View.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
             View.BackgroundColor = UIColor.Orange;
         }
 

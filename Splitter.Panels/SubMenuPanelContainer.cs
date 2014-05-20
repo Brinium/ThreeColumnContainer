@@ -9,7 +9,17 @@ namespace Splitter.Panels
     /// </summary>
     public class SubMenuPanelContainer : PanelContainer
     {
-        private readonly MasterPanelContainer _parent;
+        public float Width { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the panel is currently showing
+        /// </summary>
+        /// <value><c>true</c> if this instance is visible; otherwise, <c>false</c>.</value>
+        public virtual bool IsVisible
+        {
+            get;
+            set;
+        }
 
         #region Construction
 
@@ -18,9 +28,10 @@ namespace Splitter.Panels
         /// </summary>
         /// <param name="panel">Panel.</param>
         /// <param name="parent">parent split panel</param>
-        public SubMenuPanelContainer(MasterPanelContainer parent, UIViewController panel, RectangleF frame)
-            : base(parent, panel, frame)
+        public SubMenuPanelContainer(MasterPanelContainer parent, UIViewController panel, float width)
+            : base(parent, panel)
         {
+            Width = width;
         }
 
         #endregion
@@ -29,12 +40,12 @@ namespace Splitter.Panels
 
         protected override RectangleF VerticalViewFrame()
         {
-            return View.Frame;//_parent.SubMenuFrame;
+            return _parent.CreateSubMenuFrame();
         }
 
         protected override RectangleF HorizontalViewFrame()
         {
-            return View.Frame;//_parent.SubMenuFrame;
+            return _parent.CreateSubMenuFrame();
         }
 
         #endregion
@@ -59,10 +70,10 @@ namespace Splitter.Panels
 
 
             // Add a shadow to the top view so it looks like it is on top of the others
-            View.Layer.ShadowOpacity = 0.75f;
-            View.Layer.ShadowRadius = 10.0f;
-            View.Layer.ShadowColor = UIColor.Black.CGColor;
-            View.Layer.ShadowPath = UIBezierPath.FromRect(View.Layer.Bounds).CGPath;
+//            View.Layer.ShadowOpacity = 0.75f;
+//            View.Layer.ShadowRadius = 10.0f;
+//            View.Layer.ShadowColor = UIColor.Black.CGColor;
+//            View.Layer.ShadowPath = UIBezierPath.FromRect(View.Layer.Bounds).CGPath;
         }
 
         #endregion
