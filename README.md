@@ -7,4 +7,4 @@ Included is a MvvmCross iPad Presenter to present views (within a navigation con
 Inspiration and some flyout code pinched from patbonecrusher's SlidingPanels.Touch.
 https://github.com/patbonecrusher/SlidingPanels.Touch/
 
-This project is still a work in progress and is not complete nor fully functional.
+This project is working but need to add some gesture support for closing submenus.
