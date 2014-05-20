@@ -21,12 +21,19 @@
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>True</MtouchDebug>
-    <MtouchSdkVersion>7.0</MtouchSdkVersion>
+    <MtouchSdkVersion>6.0</MtouchSdkVersion>
     <MtouchFastDev>True</MtouchFastDev>
-    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchArch>Default, ARMv7</MtouchArch>
     <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
     <MtouchI18n>
     </MtouchI18n>
+    <MtouchProfiling>False</MtouchProfiling>
+    <MtouchExtraArgs />
+    <MtouchEnableGenericValueTypeSharing>True</MtouchEnableGenericValueTypeSharing>
+    <MtouchUseLlvm>False</MtouchUseLlvm>
+    <MtouchUseThumb>False</MtouchUseThumb>
+    <MtouchUseSGen>False</MtouchUseSGen>
+    <MtouchUseRefCounting>False</MtouchUseRefCounting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -148,11 +155,11 @@
     <Reference Include="monotouch" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Splitter.Core\Splitter.Core.csproj">
+    <ProjectReference Include="..\ThreeColumn.Core\ThreeColumn.Core.csproj">
       <Project>{9093E633-5614-432A-B1A0-264917D40FD5}</Project>
       <Name>Splitter.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Splitter.Panels\Splitter.Panels.csproj">
+    <ProjectReference Include="..\ThreeColumn.Panels\ThreeColumn.Panels.csproj">
       <Project>{B6B80A97-B989-4977-ABF6-19936247B136}</Project>
       <Name>Splitter.Panels</Name>
     </ProjectReference>

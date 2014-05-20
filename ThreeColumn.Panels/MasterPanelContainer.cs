@@ -14,6 +14,7 @@ namespace Splitter.Panels
 
         public DetailPanelContainer DetailContainer { get; set; }
 
+        #region Panel Sizing
         public RectangleF CreateMenuFrame()
         {
             return new RectangleF
@@ -43,6 +44,8 @@ namespace Splitter.Panels
 
         public RectangleF CreateDetailFrame()
         {
+            var frame = UIScreen.MainScreen.ApplicationFrame;
+            var bound = UIScreen.MainScreen.Bounds;
             var x = SubMenuContainer != null && SubMenuContainer.IsVisible ? SubMenuContainer.View.Frame.X + SubMenuContainer.View.Frame.Width : MenuContainer != null ? MenuContainer.View.Frame.X + MenuContainer.View.Frame.Width : 0;
             return new RectangleF
             {
@@ -51,7 +54,8 @@ namespace Splitter.Panels
                 Width = View.Frame.Width - x,
                 Height = View.Frame.Height
             };
-        }
+        } 
+        #endregion
 
         #region Construction/Destruction
 

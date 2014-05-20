@@ -23,15 +23,11 @@
 	<key>NSMainNibFile~ipad</key>
 	<string></string>
 	<key>CFBundleIconFiles</key>
-	<array>
-		<string>Default.png</string>
-		<string>Default@2x.png</string>
-		<string>Default-568h@2x.png</string>
-	</array>
+	<array/>
 	<key>CFBundleDisplayName</key>
-	<string>Splitter</string>
+	<string>ThreeColumn</string>
 	<key>CFBundleIdentifier</key>
-	<string>Splitter</string>
+	<string>ThreeColumn</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 </dict>
