@@ -8,23 +8,32 @@ namespace Splitter.Core.ViewModels
     {
         public ICommand BlueCommand
         {
-            get { return new MvxCommand(() => ShowViewModel<BlueViewModel>());}
+            get { return new MvxCommand(() => ShowViewModel<BlueViewModel>()); }
         }
+
         public ICommand RedCommand
         {
             get { return new MvxCommand(() => ShowViewModel<RedViewModel>()); }
         }
+
         public ICommand ModalCommand
         {
             get { return new MvxCommand(() => ShowViewModel<ModalViewModel>()); }
         }
+
         public ICommand SingleCommand
         {
             get { return new MvxCommand(() => ShowViewModel<SinglePageViewModel>()); }
         }
+
         public ICommand SubCommand
         {
             get { return new MvxCommand(() => ShowViewModel<SubMenuViewModel>()); }
+        }
+
+        public ICommand CloseCommand
+        {
+            get { return new MvxCommand(() => Close(this)); }
         }
     }
 }

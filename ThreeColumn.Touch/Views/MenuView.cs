@@ -49,12 +49,19 @@ namespace Splitter.Touch.Views
             sub.SetTitle("Sub", UIControlState.Normal);
             Add(sub);
 
+            var close = UIButton.FromType(UIButtonType.RoundedRect);
+            close.Frame = new RectangleF(5, 210, 98, 40);
+            close.Font = UIFont.FromName("Helvetica", 22);
+            close.SetTitle("Close", UIControlState.Normal);
+            Add(close);
+
             var set = this.CreateBindingSet<MenuView, Core.ViewModels.MenuViewModel>();
             set.Bind(blue).To(vm => vm.BlueCommand);
             set.Bind(red).To(vm => vm.RedCommand);
             set.Bind(model).To(vm => vm.ModalCommand);
             set.Bind(single).To(vm => vm.SingleCommand);
             set.Bind(sub).To(vm => vm.SubCommand);
+            set.Bind(close).To(vm => vm.CloseCommand);
             set.Apply();
         }
     }

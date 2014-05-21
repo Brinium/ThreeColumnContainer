@@ -47,21 +47,21 @@ namespace Splitter.Touch
                 switch (view.TypeOfView)
                 {
                     case ViewType.MenuView:
-                        //close masterView or nav back
+                        base.Close(masterView.ViewModel);
                         break;
                     case ViewType.SubMenuView:
                         masterView.MasterContainer.HideMenu();
                         break;
                     case ViewType.DetailView:
-                        //masterView.ClosePanel(PanelType.SubMenuPanel);
+                        base.Close(masterView.ViewModel);
                         break;
                     case ViewType.SingleView:
                         base.Close(toClose);
                         break;
                 }
             }
-
-            base.Close(toClose);
+            else
+                base.Close(toClose);
         }
 
         public override void Show(IMvxTouchView view)

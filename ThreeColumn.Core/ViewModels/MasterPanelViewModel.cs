@@ -3,8 +3,8 @@ using Cirrious.MvvmCross.ViewModels;
 
 namespace Splitter.Core.ViewModels
 {
-	public class MasterPanelViewModel 
+    public class MasterPanelViewModel
 		: MvxViewModel
-	{
-	}
+    {
+    }
 }

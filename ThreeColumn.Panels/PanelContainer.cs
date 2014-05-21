@@ -15,7 +15,7 @@ namespace Splitter.Panels
 
         public static int ChildMargin
         {
-            get { return 0; }
+            get { return 5; }
         }
 
         /// <summary>

@@ -15,6 +15,7 @@ namespace Splitter.Panels
         public DetailPanelContainer DetailContainer { get; set; }
 
         #region Panel Sizing
+
         public RectangleF CreateMenuFrame()
         {
             return new RectangleF
@@ -54,7 +55,8 @@ namespace Splitter.Panels
                 Width = View.Frame.Width - x,
                 Height = View.Frame.Height
             };
-        } 
+        }
+
         #endregion
 
         #region Construction/Destruction

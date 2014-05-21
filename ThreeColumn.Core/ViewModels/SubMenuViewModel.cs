@@ -6,6 +6,11 @@ namespace Splitter.Core.ViewModels
     public class SubMenuViewModel 
 		: MvxViewModel
     {
+        public ICommand RedCommand
+        {
+            get { return new MvxCommand(() => ShowViewModel<RedViewModel>()); }
+        }
+
         public ICommand ModalCommand
         {
             get { return new MvxCommand(() => ShowViewModel<ModalViewModel>()); }
